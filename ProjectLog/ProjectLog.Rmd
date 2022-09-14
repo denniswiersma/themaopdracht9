@@ -1,0 +1,15 @@
+---
+title: "ProjectLog"
+author: "Dennis Wiersma"
+date: "2022-09-14"
+output: pdf_document
+---
+
+```{r}
+# Copyright (c) 2022 Dennis Wiersma.
+# Licensed under GPLv3. See LICENSE file.
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
