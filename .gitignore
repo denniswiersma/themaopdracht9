@@ -1,9 +1,14 @@
+# R files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
 .Rproj
 /themaopdracht9.Rproj
+
+# MacOS files
 .DS_Store
+
+# Personal files
 /assignment_reproducible_research
 /notes.txt
