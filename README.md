@@ -26,3 +26,4 @@ The dataset used for this project can be found [here](https://www.kaggle.com/dat
 - README.md   | The very thing you are currently reading.
 - data        | A folder containing the dataset which is to be processed for this project.
   - framingham.csv | Dataset containing data from an ongoing cardiovascular study on residents of the town of Framingham, Massachusetts.
+- CodeBook.txt| Description of variables and their units.

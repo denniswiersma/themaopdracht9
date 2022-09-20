@@ -1,0 +1,17 @@
+name|description|unit|statType|dataType
+male|gender, male or female|NA|nominal|bool
+age|age|years|continuous|int
+education|presumably education level|NA|NA|int
+currentSmoker|whether the subject is a smoker|NA|nominal|bool
+cigsPerDay|average number of smoked cigarettes per day|cigarettes per day|continuous|int
+BPMeds|whether the subject is on blood pressure medication|NA|nominal|bool
+prevalentStroke|whether the subject has previously had a stroke|NA|nominal|bool
+prevalentHyp|whether the subject is hypertensive|NA|nominal|bool
+diabetes|whether the subject is diabetic|NA|nominal|bool
+totChol|total cholesterol level|NA|continuous|int
+sysBP|systolic blood pressure|NA|continuous|int
+diaBP|diastolic blood pressure|NA|continuous|int
+BMI|Body Mass Index|kg/m2|continuous|double
+heartRate|heart rate|beats per minute|continuous|int
+glucose|glucose level|NA|continuous|int
+TenYearCHD|ten year risk of coronary heart disease|NA|nominal|bool
