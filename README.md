@@ -25,11 +25,11 @@ Also included in this dataset are some numeric variables, described on the datas
 The source for this data mentioned on the Kaggle page links to another page on Kaggle. Nonetheless, this page no longer exists. We do however know that this data originates from the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). Searching through this website for our missing units led to [this page](https://www.framinghamheartstudy.org/fhs-for-researchers/data-available-overview/) about available FHS data. From there we find a page on [FHS Dataset Inventory for Public Viewing](https://wwwapp.bumc.bu.edu/FHSresapp/Public/DataSetList) which lists all datasets which can be requested from the FHS team. This page includes documentation on variables. This sounds like progress but there are fifty pages of datasets to choose from. Finding out which of these datasets was used to source the data used in this project is too time intensive. Therefore, there is no other choice but to work with what we have and use the data without it's corresponding units.
 
 ## Filestructure 
-- .gitignore 
-- LICENSE     | Copy of the GPLv3 license which applies to the work found in this repository.
 - ExploratoryDataAnalysis  | Folder containing all project files related to the EDA.
   - ExploratoryDataAnalysis.Rmd | R markdown file containing a written log of all performed work related to the EDA.
-- README.md   | The very thing you are currently reading.
 - data        | A folder containing the dataset which is to be processed for this project.
   - framingham.csv | Dataset containing data from an ongoing cardiovascular study on residents of the town of Framingham, Massachusetts.
+- .gitignore 
 - CodeBook.txt | Description of variables and their units.
+- LICENSE     | Copy of the GPLv3 license which applies to the work found in this repository.
+- README.md   | The very thing you are currently reading.
