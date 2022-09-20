@@ -1,11 +1,11 @@
 ---
-title: "ProjectLog"
+title: "Exploratory Data Analysis"
 author: "Dennis Wiersma"
 date: "2022-09-14"
 output: pdf_document
 ---
 
-```{r}
+```{r, include=FALSE}
 # Copyright (c) 2022 Dennis Wiersma.
 # Licensed under GPLv3. See LICENSE file.
 ```
@@ -13,3 +13,4 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
