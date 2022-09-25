@@ -65,3 +65,11 @@ knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")])
 ```
 
 To resolve these missing units one may look for the source of the data. The source for this data mentioned on the Kaggle page links to another page on Kaggle. The problem is that this page no longer exists. We do however know that this data originates from the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). Searching through this website for our missing units led to [this page](https://www.framinghamheartstudy.org/fhs-for-researchers/data-available-overview/) about available FHS data. From there we find a page on [FHS Dataset Inventory for Public Viewing](https://wwwapp.bumc.bu.edu/FHSresapp/Public/DataSetList) which lists all datasets which can be requested from the FHS team. This page includes documentation on variables. This sounds like progress but there are fifty pages of datasets to choose from. Finding out which of these datasets was used to source the data used in this project would be too time intensive. Therefore, there is no other choice but to work with what we have and use the data without it's corresponding units.
+
+### Missing values
+Before we can continue to analysing the dataset with fancy distributions and the likes, we have to decide how to deal with missing values in our dataset. Depending on the amount and type of the missing data there are several methods of approach. Let's take a look at how many missing values each of our variables contains: 
+```{r NAvalues}
+# Get the 7th row of the dataset's summary (the NA's row)
+# Then print the rows where number of NA's > 0
+knitr::kable(summary(dataset)[7, which(!is.na(summary(dataset)[7,]))], "simple")
+```
