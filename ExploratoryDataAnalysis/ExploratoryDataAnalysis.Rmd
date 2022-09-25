@@ -21,3 +21,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 Cardiovascular disease gets more prominent by the day. As one of the leading causes of death in the developed world it is an important issue to examine. Getting to know more about this matter and what factors impact risk of complications can therefore be rather interesting. This document describes the Exploratory Data Analysis which functions as a kick off point for this project.
+
+# Dataset
+The dataset used in this research project contains data from an ongoing cardiovascular study on residents of the town of Framingham, Massachusetts, United States of America. This study is better known as the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). 
+
+## Loading the data
+The subset of this large collection of data used for this research contains over 4000 records and 15 different variables. In this section all necessary files will be loaded for analysis.
+
+### Loading the codebook
+The codebook is a document describing variables and listing additional information like units and datatypes.  
+The codebook will be loaded as follows:
+```{r loadingCodebook}
+# Load codebook
+codeBook <- read.table(file = "../CodeBook.txt", header = TRUE, sep = "|")
+# Create table w/ codebook contents
+knitr::kable(codeBook, "simple")
+```
+
+### Loading the dataset
+To analyse our dataset we'll of course need access to it. It will be loaded with the code below:
+```{r loadingDataset}
+# Load dataset
+dataset <- read.table(file = "../data/framingham.csv", header = TRUE, sep = ",")
+# Get dimensions of dataset
+dataset.dim <- dim(dataset)
+# Print dimensions of dataset
+cat("Instances: ", dataset.dim[1], "\nvariables: ", dataset.dim[2])
+```
