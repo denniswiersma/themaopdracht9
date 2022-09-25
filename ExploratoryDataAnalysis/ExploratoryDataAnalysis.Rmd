@@ -3,6 +3,7 @@ title: "Exploratory Data Analysis"
 author: "Dennis Wiersma"
 date: "2022-09-14"
 output: pdf_document
+urlcolor: blue
 ---
 
 ```{r, include=FALSE}
