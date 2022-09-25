@@ -15,3 +15,6 @@ urlcolor: blue
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r libraries, include=FALSE}
+# Loading required libraries
+```
