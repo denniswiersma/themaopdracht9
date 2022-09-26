@@ -83,7 +83,7 @@ First up is education. We still don't know what the education variable really ev
 dataset <- subset(dataset, select = -c(education))
 ```
 
-### Cigarettes smoked per day
+### cigsPerDay - Cigarettes smoked per day
 This variable only has a few dozen missing values, so it wouldn't be the end of the world to simply get rid of them. There is a better way however. Let's first take a look at these missing values and check whether all of the missing cigsPerDay values are actually from smokers:
 ```{r cigsPerDayNATable}
 knitr::kable(dataset[which(is.na(dataset["cigsPerDay"])), c("currentSmoker", "cigsPerDay")])
