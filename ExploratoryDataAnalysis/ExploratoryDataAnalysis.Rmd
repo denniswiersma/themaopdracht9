@@ -123,7 +123,7 @@ As can be seen in the table above, all of the present NA values are indeed from 
 cat("Number of NAs before: ", sum(is.na(dataset["cigsPerDay"])))
 # Calculate median cigarettes per day for smokers
 medianCigsPerDay <- median(na.omit(dataset["cigsPerDay"][dataset["currentSmoker"] == "yes"]))
-# Change number of cigarettes per day to mean
+# Change number of cigarettes per day to median
 dataset[which(is.na(dataset["cigsPerDay"])), "cigsPerDay"] <- medianCigsPerDay
 # Check number of NAs
 cat("Number of NAs after: ", sum(is.na(dataset["cigsPerDay"])))
@@ -146,3 +146,53 @@ dataset[which(is.na(dataset["BPMeds"])), "BPMeds"] <- "no"
 cat("Number of NAs after: ", sum(is.na(dataset["BPMeds"])))
 ```
 
+### totChol - Total cholestorol level
+Since total cholestorol level is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+```{r totCholNA}
+# Check number of NAs
+cat("Number of NAs before: ", sum(is.na(dataset["totChol"])))
+# Calculate median totChol
+medianTotChol <- median(na.omit(dataset$totChol))
+# Change missing totChol values to median
+dataset[which(is.na(dataset["totChol"])), "totChol"] <- medianTotChol
+# Check number of NAs
+cat("Number of NAs after: ", sum(is.na(dataset["totChol"])))
+```
+
+### BMI - Body Mass Index
+Since total BMI is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+```{r BMINA}
+# Check number of NAs
+cat("Number of NAs before: ", sum(is.na(dataset["BMI"])))
+# Calculate median BMI
+medianBMI <- median(na.omit(dataset$BMI))
+# Change missing BMI values to median
+dataset[which(is.na(dataset["BMI"])), "BMI"] <- medianBMI
+# Check number of NAs
+cat("Number of NAs after: ", sum(is.na(dataset["BMI"])))
+```
+
+### heartRate - Heart rate
+Since total heart rate level is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+```{r totHeartRateNA}
+# Check number of NAs
+cat("Number of NAs before: ", sum(is.na(dataset["heartRate"])))
+# Calculate median heartRate
+medianHeartRate<- median(na.omit(dataset$heartRate))
+# Change missing heartRate values to median
+dataset[which(is.na(dataset["heartRate"])), "heartRate"] <- medianHeartRate
+# Check number of NAs
+cat("Number of NAs after: ", sum(is.na(dataset["heartRate"])))
+```
+
+### glucose - Glucose levels
+Since total glucose levels is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+```{r glucoseNA}
+# Check number of NAs
+cat("Number of NAs before: ", sum(is.na(dataset["glucose"])))
+# Calculate median glucose
+medianGlucose <- median(na.omit(dataset$glucose))
+# Change missing glucose values to median
+dataset[which(is.na(dataset["glucose"])), "glucose"] <- medianGlucose
+# Check number of NAs
+cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
