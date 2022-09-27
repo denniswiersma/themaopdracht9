@@ -132,7 +132,7 @@ cat("Number of NAs after: ", sum(is.na(dataset["cigsPerDay"])))
 ### BPMeds - Blood pressure medication
 To decide what to do with the missing blood pressure medication values, we shall first look at how balanced this variable is. One might reasonably assume that subjects that are on blood pressure medication would be in the minority, but it's still worth it to check.
 ```{r BPMedsNAPlot, warning=FALSE}
-ggplot(dataset, aes(x = BPMeds)) + 
+ggplot(dataset, aes(x = BPMeds, fill = BPMeds)) + 
   geom_bar() +
   ggtitle("Subjects on blood pressure medication")
 ```
