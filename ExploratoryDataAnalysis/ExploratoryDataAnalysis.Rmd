@@ -69,6 +69,34 @@ knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")])
 
 To resolve these missing units one may look for the source of the data. The source for this data mentioned on the Kaggle page links to another page on Kaggle. The problem is that this page no longer exists. We do however know that this data originates from the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). Searching through this website for our missing units led to [this page](https://www.framinghamheartstudy.org/fhs-for-researchers/data-available-overview/) about available FHS data. From there we find a page on [FHS Dataset Inventory for Public Viewing](https://wwwapp.bumc.bu.edu/FHSresapp/Public/DataSetList) which lists all datasets which can be requested from the FHS team. This page includes documentation on variables. This sounds like progress but there are fifty pages of datasets to choose from. Finding out which of these datasets was used to source the data used in this project would be too time intensive. Therefore, there is no other choice but to work with what we have and use the data without it's corresponding units.
 
+## Datatype correction
+```{r structure}
+str(dataset)
+```
+When looking at the structure of our dataset above one might notice the fact that some of the data types aren't quite right. For example, a lot of our nominal values are encoded as integers. We shall fix this now:
+
+```{r fixDatatypes}
+# Change male column from int to female\male factor
+dataset$male <- factor(dataset$male, labels = c("female", "male"))
+# Change currentSmoker column from int to no/yes factor
+dataset$currentSmoker <- factor(dataset$currentSmoker, labels = c("no", "yes"))
+# Change BPMeds column from int to no/yes factor
+dataset$BPMeds <- factor(dataset$BPMeds, labels = c("no", "yes"))
+# Change prevalentStroke column from int to no/yes factor
+dataset$prevalentStroke <- factor(dataset$prevalentStroke, labels = c("no", "yes"))
+# Change prevalentHyp column from int to no/yes factor
+dataset$prevalentHyp <- factor(dataset$prevalentHyp, labels = c("no", "yes"))
+# Change diabetes column from int to no/yes factor
+dataset$diabetes <- factor(dataset$diabetes, labels = c("no", "yes"))
+# Change TenYearCHD column from int to no/yes factor
+dataset$TenYearCHD <- factor(dataset$TenYearCHD, labels = c("no", "yes"))
+```
+If we look at the data's structure again now, we'll see it looks a lot better.
+```{r structure2}
+str(dataset)
+```
+
+
 ## Missing values
 Before we can continue to analysing the dataset with fancy distributions and the likes, we have to decide how to deal with missing values in our dataset. Depending on the amount and type of the missing data there are several methods of approach. Let's take a look at how many missing values each of our variables contains: 
 ```{r NAvalues}
@@ -94,7 +122,7 @@ As can be seen in the table above, all of the present NA values are indeed from 
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["cigsPerDay"])))
 # Calculate median cigarettes per day for smokers
-medianCigsPerDay <- median(na.omit(dataset["cigsPerDay"][dataset["currentSmoker"] == 1]))
+medianCigsPerDay <- median(na.omit(dataset["cigsPerDay"][dataset["currentSmoker"] == "yes"]))
 # Change number of cigarettes per day to mean
 dataset[which(is.na(dataset["cigsPerDay"])), "cigsPerDay"] <- medianCigsPerDay
 # Check number of NAs
@@ -105,7 +133,7 @@ cat("Number of NAs after: ", sum(is.na(dataset["cigsPerDay"])))
 To decide what to do with the missing blood pressure medication values, we shall first look at how balanced this variable is. One might reasonably assume that subjects that are on blood pressure medication would be in the minority, but it's still worth it to check.
 ```{r BPMedsNAPlot, warning=FALSE}
 ggplot(dataset, aes(x = BPMeds)) + 
-  geom_histogram(binwidth = 0.5) +
+  geom_bar() +
   ggtitle("Subjects on blood pressure medication")
 ```
 From this plot we may conclude that a large majority of subjects are in fact not on blood pressure medication. We can therefore assume that subjects with missing values for this variable aren't on blood pressure medication either. So let's fix the values:
@@ -113,7 +141,7 @@ From this plot we may conclude that a large majority of subjects are in fact not
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["BPMeds"])))
 # Change missing BPMeds values to 0
-dataset[which(is.na(dataset["BPMeds"])), "BPMeds"] <- 0
+dataset[which(is.na(dataset["BPMeds"])), "BPMeds"] <- "no"
 # Check number of NAs
 cat("Number of NAs after: ", sum(is.na(dataset["BPMeds"])))
 ```
