@@ -79,7 +79,7 @@ str(dataset)
 When looking at the structure of our dataset above one might notice the fact that some of the data types aren't quite right. For example, a lot of our nominal values are encoded as integers. We shall fix this now:
 
 ```{r fixDatatypes}
-# Change male column from int to female\male factor
+# Change male column from int to female/male factor
 dataset$male <- factor(dataset$male, labels = c("female", "male"))
 # Change currentSmoker column from int to no/yes factor
 dataset$currentSmoker <- factor(dataset$currentSmoker, labels = c("no", "yes"))
@@ -143,7 +143,7 @@ From this plot we may conclude that a large majority of subjects are in fact not
 ```{r BPMedsNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["BPMeds"])))
-# Change missing BPMeds values to 0
+# Change missing BPMeds values to "no"
 dataset[which(is.na(dataset["BPMeds"])), "BPMeds"] <- "no"
 # Check number of NAs
 cat("Number of NAs after: ", sum(is.na(dataset["BPMeds"])))
