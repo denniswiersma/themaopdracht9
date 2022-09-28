@@ -252,3 +252,13 @@ correlation <- cor(dataset[,c("age", "cigsPerDay", "totChol",
 heatmap(correlation, Rowv = NA, Colv = NA, 
         main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
 ```
+
+## PCA - Principal Component Analysis
+
+```{r}
+pca <- prcomp(dataset[,c("age", "cigsPerDay", "totChol","sysBP",
+                         "BMI", "heartRate", "glucose")], center = TRUE, scale. = TRUE)
+ggbiplot(pca, obs.scale = 1, var.scale = 1,
+         groups = dataset$TenYearCHD, circle = TRUE) +
+  ggtitle("Principal Component Analysis")
+```
