@@ -199,3 +199,19 @@ medianGlucose <- median(na.omit(dataset$glucose))
 dataset[which(is.na(dataset["glucose"])), "glucose"] <- medianGlucose
 # Check number of NAs
 cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
+```
+
+## Variations and distributions
+
+### Numeric variable variations vs Ten year risk of CHD
+```{r}
+boxplots <- function(colName) {
+  ggplot(dataset, aes(x = TenYearCHD, y = !!sym(colName), fill = TenYearCHD)) +
+  geom_boxplot(show.legend = FALSE) +
+  theme(text=element_text(size=8))
+}
+
+cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
+plot_list <- lapply(cols, boxplots)
+ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
+```
