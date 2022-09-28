@@ -215,3 +215,16 @@ cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose"
 plot_list <- lapply(cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+
+### Log transformation of numeric variable variations vs Ten year risk of CHD
+```{r}
+boxplots <- function(colName) {
+  ggplot(dataset, aes(x = TenYearCHD, y = log(!!sym(colName) + 1), fill = TenYearCHD)) +
+  geom_boxplot(show.legend = FALSE) +
+  theme(text=element_text(size=8))
+}
+
+cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
+plot_list <- lapply(cols, boxplots)
+ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
+```
