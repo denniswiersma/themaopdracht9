@@ -243,3 +243,12 @@ cols <- c("male", "currentSmoker", "BPMeds", "prevalentStroke",
 plot_list <- lapply(cols, barplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+
+## Correlation
+
+```{r}
+correlation <- cor(dataset[,c("age", "cigsPerDay", "totChol", 
+                              "sysBP", "BMI", "heartRate", "glucose")])
+heatmap(correlation, Rowv = NA, Colv = NA, 
+        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
+```
