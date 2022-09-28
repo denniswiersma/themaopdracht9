@@ -228,3 +228,18 @@ cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose"
 plot_list <- lapply(cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+
+### Class distributions
+
+```{r}
+barplots <- function(colName) {
+  ggplot(dataset, aes(x = !!sym(colName), fill = !!sym(colName))) +
+  geom_bar(show.legend = FALSE) +
+  theme(text=element_text(size=8))
+}
+
+cols <- c("male", "currentSmoker", "BPMeds", "prevalentStroke",
+          "prevalentHyp", "diabetes", "TenYearCHD")
+plot_list <- lapply(cols, barplots)
+ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
+```
