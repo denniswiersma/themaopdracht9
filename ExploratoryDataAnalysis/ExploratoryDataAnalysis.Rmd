@@ -202,7 +202,7 @@ cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
 ```
 
 ## Variations and distributions
-Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. These types of difficulties will be discussed as we go.
+Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example the `r corr()` function only takes numeric data. We will therefore explore these different types of variables in their own distinct ways.
 
 ### Numeric variable variations vs Ten year risk of CHD
 ```{r}
