@@ -201,8 +201,10 @@ dataset[which(is.na(dataset["glucose"])), "glucose"] <- medianGlucose
 cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
 ```
 
-## Variations and distributions
+# Visualisations
 Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example the `r corr()` function only takes numeric data. We will therefore explore these different types of variables in their own distinct ways.
+
+## Numeric variables
 
 ### Numeric variable variations vs Ten year risk of CHD
 ```{r}
@@ -230,6 +232,27 @@ plot_list <- lapply(cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 
+### Correlation
+
+```{r}
+correlation <- cor(dataset[,c("age", "cigsPerDay", "totChol", 
+                              "sysBP", "BMI", "heartRate", "glucose")])
+heatmap(correlation, Rowv = NA, Colv = NA, 
+        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
+```
+
+### PCA - Principal Component Analysis
+
+```{r}
+pca <- prcomp(dataset[,c("age", "cigsPerDay", "totChol","sysBP",
+                         "BMI", "heartRate", "glucose")], center = TRUE, scale. = TRUE)
+ggbiplot(pca, obs.scale = 1, var.scale = 1,
+         groups = dataset$TenYearCHD, circle = TRUE) +
+  ggtitle("Principal Component Analysis")
+```
+
+## Nominal variables
+
 ### Class distributions
 
 ```{r}
@@ -243,23 +266,4 @@ cols <- c("male", "currentSmoker", "BPMeds", "prevalentStroke",
           "prevalentHyp", "diabetes", "TenYearCHD")
 plot_list <- lapply(cols, barplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
-```
-
-## Correlation
-
-```{r}
-correlation <- cor(dataset[,c("age", "cigsPerDay", "totChol", 
-                              "sysBP", "BMI", "heartRate", "glucose")])
-heatmap(correlation, Rowv = NA, Colv = NA, 
-        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
-```
-
-## PCA - Principal Component Analysis
-
-```{r}
-pca <- prcomp(dataset[,c("age", "cigsPerDay", "totChol","sysBP",
-                         "BMI", "heartRate", "glucose")], center = TRUE, scale. = TRUE)
-ggbiplot(pca, obs.scale = 1, var.scale = 1,
-         groups = dataset$TenYearCHD, circle = TRUE) +
-  ggtitle("Principal Component Analysis")
 ```
