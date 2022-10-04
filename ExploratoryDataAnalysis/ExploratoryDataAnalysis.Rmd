@@ -25,6 +25,10 @@ library("ggpubr")
 library("ggbiplot")
 ```
 
+\newpage
+\tableofcontents
+\newpage
+
 # Introduction
 Cardiovascular disease gets more prominent by the day. As one of the leading causes of death in the developed world it is an important issue to examine. Getting to know more about this matter and what factors impact risk of complications can therefore be rather interesting. This document describes the Exploratory Data Analysis which functions as a kick off point for this project.
 
