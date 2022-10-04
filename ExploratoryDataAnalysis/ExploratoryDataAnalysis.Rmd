@@ -206,11 +206,9 @@ cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
 ```
 
 # Visualisations
-Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example the `corr()` function only takes numeric data. We will therefore explore these different types of variables in their own distinct ways.
+Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example it isn't very useful to compare two factors in a boxplot. We will therefore, on occasion, explore these different types of variables in their own distinct ways.
 
-## Numeric variables
-
-### Boxplots split on class variable
+## Boxplots split on class variable
 Let us start by looking at the variations in our data. To do this we'll be creating a boxplot for every one of our numeric variables. This will let us examine the variance, as well as some key metrics like the mean, in an easy to grasp visual manner.
 We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
 
@@ -221,13 +219,13 @@ boxplots <- function(colName) {
   theme(text=element_text(size=8))
 }
 
-cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
-plot_list <- lapply(cols, boxplots)
+numeric_cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
+plot_list <- lapply(numeric_cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 As you may have noticed when exploring these plots, we are presented with a lot of outliers as well as some skewed data. The `glucose` variable would be a great example of the former, while the `cigsPerDay` variable is a wonderful illustration of the latter. We'll try to remedy this in our next step.
 
-### Boxplots split on class variable - Log transformation
+## Boxplots split on class variable - Log transformation
 To try and reduce both the outliers in our data as well as the skewness, we will perform a log transformation which we shall then plot in the same way as in the last step. This should, theoretically, help to reduce both of these problems.  
 When performing this operation we do not just use the `log()` function, but we add one to all of the values first. To explain why we will once again look at the `cigsPerDay` variable. As you might imagine there are a lot of people that simply don't smoke and will therefore have reported zero here. If we were to perform a log transformation now, R would return infinity for all the zero values. These infinity values would then automatically be filtered out by R when trying to create a plot, therefore simply removing these data points from the visualisation. If we add one to all of our values the distribution stays the same, but it does eliminate this problem of infinite values.
 
@@ -238,35 +236,14 @@ boxplots <- function(colName) {
   theme(text=element_text(size=8))
 }
 
-cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
-plot_list <- lapply(cols, boxplots)
+numeric_cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
+plot_list <- lapply(numeric_cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 Let's take a look at the same two variables as in our last step, `glucose` and `cigsPerDay`. Examining `glucose`'s boxplot we learn that the boxplot has gotten a little larger, indicating fewer outliers. The difference isn't all that noticeable however, and we are still presented with a lot of outliers. Evaluating the `cigsPerDay` variable presents us with a disparity between the two `TenYearCHD` categories. While the `yes` boxplot clearly shows an improvement in its skewness, the `no` boxplot does not.  
 Overall this transformation doesn't seem to have had too much of an impact. Therefore we won't be using it any further, unless it turns out to be preferable when selecting an algorithm later on in this project.
 
-### Correlation
-
-```{r}
-correlation <- cor(dataset[,c("age", "cigsPerDay", "totChol", 
-                              "sysBP", "BMI", "heartRate", "glucose")])
-heatmap(correlation, Rowv = NA, Colv = NA, 
-        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
-```
-
-### PCA - Principal Component Analysis
-
-```{r}
-pca <- prcomp(dataset[,c("age", "cigsPerDay", "totChol","sysBP",
-                         "BMI", "heartRate", "glucose")], center = TRUE, scale. = TRUE)
-ggbiplot(pca, obs.scale = 1, var.scale = 1,
-         groups = dataset$TenYearCHD, circle = TRUE) +
-  ggtitle("Principal Component Analysis")
-```
-
-## Nominal variables
-
-### Class distributions
+## Class distributions
 
 ```{r}
 barplots <- function(colName) {
@@ -275,8 +252,27 @@ barplots <- function(colName) {
   theme(text=element_text(size=8))
 }
 
-cols <- c("male", "currentSmoker", "BPMeds", "prevalentStroke",
-          "prevalentHyp", "diabetes", "TenYearCHD")
+cols <- colnames(dataset)
 plot_list <- lapply(cols, barplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+
+## Correlation
+
+```{r}
+dataset.numeric <- sapply(dataset, as.integer)
+
+correlation <- cor(dataset.numeric)
+heatmap(correlation, Rowv = NA, Colv = NA, 
+        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
+```
+
+## PCA - Principal Component Analysis
+
+```{r}
+pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
+ggbiplot(pca, obs.scale = 1, var.scale = 1,
+         groups = dataset$TenYearCHD, circle = TRUE) +
+  ggtitle("Principal Component Analysis")
+```
+
