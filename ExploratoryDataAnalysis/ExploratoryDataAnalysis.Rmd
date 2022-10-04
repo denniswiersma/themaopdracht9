@@ -283,7 +283,9 @@ corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset
 ## PCA - Principal Component Analysis
 
 ```{r PCA}
+# Get PCA calculation on numeric dataset
 pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
+# Plot PCA calculation
 ggbiplot(pca, obs.scale = 1, var.scale = 1,
          groups = dataset$TenYearCHD, circle = TRUE, alpha = 0.35) +
   ggtitle("Principal Component Analysis")
