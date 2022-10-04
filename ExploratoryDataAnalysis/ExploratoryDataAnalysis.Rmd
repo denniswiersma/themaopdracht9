@@ -246,7 +246,7 @@ Overall this transformation doesn't seem to have had too much of an impact. Ther
 
 ## Class distributions
 
-```{r classDistributions}
+```{r classDistributions, results="hide"}
 barplots <- function(colName) {
   ggplot(dataset, aes(x = !!sym(colName), fill = !!sym(colName))) +
   geom_bar(show.legend = FALSE) +
