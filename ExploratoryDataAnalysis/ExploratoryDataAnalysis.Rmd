@@ -214,14 +214,18 @@ Let us start by looking at the variations in our data. To do this we'll be creat
 We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
 
 ```{r boxplots}
+# function that creates a boxplot on dataset given a column name
 boxplots <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = !!sym(colName), fill = TenYearCHD)) +
   geom_boxplot(show.legend = FALSE) +
   theme(text=element_text(size=8))
 }
 
+# vector with all numeric columns
 numeric_cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
+# execute boxplots function on every numeric column
 plot_list <- lapply(numeric_cols, boxplots)
+# arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 As you may have noticed when exploring these plots, we are presented with a lot of outliers as well as some skewed data. The `glucose` variable would be a great example of the former, while the `cigsPerDay` variable is a wonderful illustration of the latter. We'll try to remedy this in our next step.
