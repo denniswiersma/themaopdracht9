@@ -202,11 +202,11 @@ cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
 ```
 
 # Visualisations
-Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example the `r corr()` function only takes numeric data. We will therefore explore these different types of variables in their own distinct ways.
+Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example the `corr()` function only takes numeric data. We will therefore explore these different types of variables in their own distinct ways.
 
 ## Numeric variables
 
-### Numeric variable variations vs Ten year risk of CHD
+### Boxplots split on class variable
 ```{r}
 boxplots <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = !!sym(colName), fill = TenYearCHD)) +
@@ -219,7 +219,7 @@ plot_list <- lapply(cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 
-### Log transformation of numeric variable variations vs Ten year risk of CHD
+### Boxplots split on class variable - Log transformation
 ```{r}
 boxplots <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = log(!!sym(colName) + 1), fill = TenYearCHD)) +
