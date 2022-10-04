@@ -270,10 +270,12 @@ ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 
 ## Correlation
 
-```{r Correlation}
+```{r correlation}
+# Convert all columns in the dataset to numeric data
 dataset.numeric <- sapply(dataset, as.integer)
-
+# Get correlation metrics on the dataset
 correlation <- cor(dataset.numeric)
+# Create a correlation matrix using the correlation metrics
 corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset = 1, 
          title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0), cl.cex = 0.75)
 ```
