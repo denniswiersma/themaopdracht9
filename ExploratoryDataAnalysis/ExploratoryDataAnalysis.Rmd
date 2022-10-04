@@ -211,6 +211,9 @@ Now that we have a complete and workable dataset we can start exploring what our
 ## Numeric variables
 
 ### Boxplots split on class variable
+Let us start by looking at the variations in our data. To do this we'll be creating a boxplot for every one of our numeric variables. This will let us examine the variance, as well as some key metrics like the mean, in an easy to grasp visual manner.
+We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
+
 ```{r}
 boxplots <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = !!sym(colName), fill = TenYearCHD)) +
@@ -222,6 +225,7 @@ cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose"
 plot_list <- lapply(cols, boxplots)
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+As you may have noticed when exploring these plots, we are presented with a lot of outliers as well as some skewed data. The `glucose` variable would be a great example of the former, while the `cigsPerDay` variable is a wonderful illustration of the latter. We'll try to remedy this in our next step.
 
 ### Boxplots split on class variable - Log transformation
 ```{r}
