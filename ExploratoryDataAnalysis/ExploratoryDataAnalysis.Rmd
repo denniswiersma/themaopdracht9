@@ -235,14 +235,16 @@ To try and reduce both the outliers in our data as well as the skewness, we will
 When performing this operation we do not just use the `log()` function, but we add one to all of the values first. To explain why we will once again look at the `cigsPerDay` variable. As you might imagine there are a lot of people that simply don't smoke and will therefore have reported zero here. If we were to perform a log transformation now, R would return infinity for all the zero values. These infinity values would then automatically be filtered out by R when trying to create a plot, therefore simply removing these data points from the visualisation. If we add one to all of our values the distribution stays the same, but it does eliminate this problem of infinite values.
 
 ```{r logTransformedBoxplots}
-boxplots <- function(colName) {
+# function that creates a boxplot on log of dataset given a column name
+boxplotsLogTransform <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = log(!!sym(colName) + 1), fill = TenYearCHD)) +
   geom_boxplot(show.legend = FALSE) +
   theme(text=element_text(size=8))
 }
 
-numeric_cols <- c("age", "cigsPerDay", "totChol", "sysBP", "BMI", "heartRate", "glucose")
-plot_list <- lapply(numeric_cols, boxplots)
+# execute boxplots function on every numeric column
+plot_list <- lapply(numeric_cols, boxplotsLogTransform)
+# arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
 Let's take a look at the same two variables as in our last step, `glucose` and `cigsPerDay`. Examining `glucose`'s boxplot we learn that the boxplot has gotten a little larger, indicating fewer outliers. The difference isn't all that noticeable however, and we are still presented with a lot of outliers. Evaluating the `cigsPerDay` variable presents us with a disparity between the two `TenYearCHD` categories. While the `yes` boxplot clearly shows an improvement in its skewness, the `no` boxplot does not.  
