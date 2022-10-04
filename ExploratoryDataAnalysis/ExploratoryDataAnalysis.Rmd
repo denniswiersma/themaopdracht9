@@ -272,7 +272,7 @@ corrplot(correlation)
 ```{r PCA}
 pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
 ggbiplot(pca, obs.scale = 1, var.scale = 1,
-         groups = dataset$TenYearCHD, circle = TRUE) +
+         groups = dataset$TenYearCHD, circle = TRUE, alpha = 0.35) +
   ggtitle("Principal Component Analysis")
 ```
 
