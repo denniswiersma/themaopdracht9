@@ -263,8 +263,7 @@ ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 dataset.numeric <- sapply(dataset, as.integer)
 
 correlation <- cor(dataset.numeric)
-heatmap(correlation, Rowv = NA, Colv = NA, 
-        main = "Correlation matrix", cexRow = 0.9, cexCol = 0.9)
+corrplot(correlation)
 ```
 
 ## PCA - Principal Component Analysis
