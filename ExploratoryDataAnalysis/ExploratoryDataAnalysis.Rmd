@@ -265,7 +265,7 @@ dataset.numeric <- sapply(dataset, as.integer)
 
 correlation <- cor(dataset.numeric)
 corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset = 1, 
-         title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0))
+         title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0), cl.cex = 0.75)
 ```
 
 ## PCA - Principal Component Analysis
