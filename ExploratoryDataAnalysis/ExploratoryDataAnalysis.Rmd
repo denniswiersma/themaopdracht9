@@ -273,7 +273,7 @@ Something worth noting about our numeric variables is that all of them look to b
 In a similar vain, one might notice a small detail that wasn't mentioned in our dataset's source. The age range for this dataset looks to be thirty to seventy year olds. Again, not something that is of immediate concern, but certainly good to know.
 
 ## Correlation
-
+Many machine learning algorithms assume all attributes are independent. Therefore it is important to check whether the variables in our dataset are actually independent, or if they turn out to be correlated. We'll do this by creating a correlation matrix. In this matrix the size and shade of the circle indicate the amount of correlation. A larger circle indicates a stronger correlation, so a smaller circle in turn indicates the opposite. A blue shade demonstrates a positive correlation while a red shade illustrates a negative correlation. Therefore the lighter shades in between indicate the lack of a correlation.
 ```{r correlation}
 # Convert all columns in the dataset to numeric data
 dataset.numeric <- sapply(dataset, as.integer)
@@ -283,6 +283,11 @@ correlation <- cor(dataset.numeric)
 corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset = 1, 
          title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0), cl.cex = 0.75)
 ```
+
+A good control point indicating the validity of this correlation matrix can be found between diabetes and glucose. This correlation has been studied extensively to the point where it is nearly common knowledge that high glucose levels correlate with diabetes. Seeing this correlation in our own data is a nice confirmation that this plot is correct. Apart from that, the correlation between these two variables indicates it might be preferable to choose one of them over the other going forward.  
+Let us now dive into the other correlations. One fairly obvious correlation is the one found between current smokers and the amount of cigarettes smoked per day. Since these variables are so similar and definitely not independent of each other, it might be worth dropping one of them depending on our choice of algorithm later.  
+The same can be said for systolic blood pressure and diastolic blood pressure. Since the former measures the amount of force put on the arteries as the heart beats, and the latter measures the amount of force on the arteries when the heart is in a state of rest, they might as well be combined into a single blood pressure variable if the chosen algorithm requires it.  
+Apart from correlating with each other the two variables named above correlate with hypertension as well. This too is a fairly obvious correlation since hypertension means the subject has high blood pressure. Another possible solution would therefore be to combine all three of these variables into a single features if necessary.
 
 ## PCA - Principal Component Analysis
 
