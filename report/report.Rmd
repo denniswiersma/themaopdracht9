@@ -16,6 +16,8 @@ urlcolor: blue
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# Excludes all code from the report
+knitr::opts_chunk$set(include = FALSE)
 ```
 
 \newpage
