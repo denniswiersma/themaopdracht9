@@ -251,7 +251,8 @@ Let's take a look at the same two variables as in our last step, `glucose` and `
 Overall this transformation doesn't seem to have had too much of an impact. Therefore we won't be using it any further, unless it turns out to be preferable when selecting an algorithm later on in this project.
 
 ## Class distributions
-
+Now that we know about the variations and outliers in our data, it is time to look at it's distribution. At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.  
+For every one of our variables we'll make one of these bar plots. We can use these to look for two features in particular. First we can quickly glance at the bar plots for our numeric data and speculate whether they seem to be normally distributed. Secondly we may examine all of the bar plots a little more carefully and look for skewness.
 ```{r classDistributions, results="hide"}
 # Function that creates a barplot on dataset given a column name
 barplots <- function(colName) {
@@ -267,6 +268,9 @@ plot_list <- lapply(cols, barplots)
 # arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+The first thing we notice is that a lot of the categorical variables are very skewed towards one particular value. In fact, all but two of these variables seem to have a significant level of skewness present. Removing most of our variables because of skewness would be foolish, so this is something we'll have to take into account when selecting an algorithm later on. One possible set of techniques to look into would be Synthetic Minority Oversampling Technique or SMOTE for short. What this entails and whether it is a good fit for our needs is something to be looked into later.  
+Something worth noting about our numeric variables is that all of them look to be normally distributed when examined by the naked eye. This is not of immediate concern but certainly good to know.  
+In a similar vain, one might notice a small detail that wasn't mentioned in our dataset's source. The age range for this dataset looks to be thirty to seventy year olds. Again, not something that is of immediate concern, but certainly good to know.
 
 ## Correlation
 
