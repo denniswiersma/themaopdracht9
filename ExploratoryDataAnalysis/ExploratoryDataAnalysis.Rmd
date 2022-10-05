@@ -301,3 +301,10 @@ ggbiplot(pca, obs.scale = 1, var.scale = 1,
   ggtitle("Principal Component Analysis")
 ```
 In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (21.6%) difference along the x-axis are to be considered more significant than differences along the y-axis.
+
+# Exporting data
+
+```{r}
+write.csv(dataset, file = "../data/processedData.csv")
+```
+
