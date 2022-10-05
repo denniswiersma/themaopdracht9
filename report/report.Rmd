@@ -20,6 +20,11 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(include = FALSE)
 ```
 
+```{r loadingDataset}
+# Load dataset
+dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = ",", stringsAsFactors = TRUE)
+```
+
 \newpage
 
 # Abstract
