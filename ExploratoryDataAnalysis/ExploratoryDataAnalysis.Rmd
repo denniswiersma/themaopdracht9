@@ -303,8 +303,11 @@ ggbiplot(pca, obs.scale = 1, var.scale = 1,
 In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (21.6%) difference along the x-axis are to be considered more significant than differences along the y-axis.
 
 # Exporting data
-
+Now that we have analysed our data and cleaned it accordingly we can go ahead and export it. We'll export into two formats: Comma Separated Values (csv) for easy usage with reporting, and Attribute Relation File Format (ARFF) for usage in the Weka software package. We'll place both of these new data files in the data folder of this project's directory.
 ```{r}
+# To CSV
 write.csv(dataset, file = "../data/processedData.csv")
+# To ARFF
+RWeka::write.arff(dataset, file = "../data/prrocessedData.arff")
 ```
 
