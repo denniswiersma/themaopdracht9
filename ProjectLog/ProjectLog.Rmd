@@ -304,7 +304,7 @@ In the plot above we can clearly see a contrast between the location of subjects
 
 ## Exporting data
 Now that we have analysed our data and cleaned it accordingly we can go ahead and export it. We'll export into two formats: Comma Separated Values (csv) for easy usage with reporting, and Attribute Relation File Format (ARFF) for usage in the Weka software package. We'll place both of these new data files in the data folder of this project's directory.
-```{r}
+```{r exportData}
 # To CSV
 write.csv(dataset, file = "../data/processedData.csv")
 # To ARFF
