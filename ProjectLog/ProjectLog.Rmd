@@ -313,3 +313,15 @@ RWeka::write.arff(dataset, file = "../data/prrocessedData.arff")
 
 # Machine Learning algorithm
 Now that we have processed and exported our dataset we can take a big step forward in this project. It is finally time to look at how we shall apply methods of Machine Learning to our data. For easy, visual interaction with our data we will open the previously exported ARFF file in Weka. Once loaded we can start to do all kinds of fun things to our dataset. Before we just start clicking random buttons, how about we discuss our options first.
+
+## Algorithm metrics
+
+### Quality & performance metrics
+
+### Algorithm exploration
+
+### Algorithm optimisation 
+
+### Meta-learners
+
+## Java wrapper
