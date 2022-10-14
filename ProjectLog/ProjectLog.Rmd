@@ -2,6 +2,8 @@
 title: "Predicting ten year risk of coronary heart disease - Project Log"
 author: "Dennis Wiersma"
 date: "`r Sys.Date()`"
+header-includes:
+  - \usepackage{multirow}
 output: 
   pdf_document: 
     number_sections: yes
@@ -26,22 +28,28 @@ library("ggbiplot")
 library("corrplot")
 ```
 
+```{=tex}
 \newpage
 \tableofcontents
 \newpage
-
+```
 # Exploratory Data Analysis
+
 Cardiovascular disease gets more prominent by the day. As one of the leading causes of death in the developed world it is an important issue to examine. Getting to know more about this matter and what factors impact risk of complications can therefore be rather interesting. This chapter describes the Exploratory Data Analysis which functions as a kick off point for this project.
 
 ## Dataset
-The dataset used in this research project contains data from an ongoing cardiovascular study on residents of the town of Framingham, Massachusetts, United States of America. This study is better known as the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). 
+
+The dataset used in this research project contains data from an ongoing cardiovascular study on residents of the town of Framingham, Massachusetts, United States of America. This study is better known as the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS).
 
 ### Loading the data
+
 The subset of this large collection of data used for this research contains over 4000 records and 15 different variables. In this section all necessary files will be loaded for analysis.
 
 #### Loading the codebook
-The codebook is a document describing variables and listing additional information like units and datatypes.  
+
+The codebook is a document describing variables and listing additional information like units and datatypes.\
 The codebook will be loaded as follows:
+
 ```{r loadingCodebook}
 # Load codebook
 codeBook <- read.table(file = "../CodeBook.txt", header = TRUE, sep = "|")
@@ -50,7 +58,9 @@ knitr::kable(codeBook, "simple")
 ```
 
 #### Loading the dataset
+
 To analyse our dataset we'll of course need access to it. It will be loaded with the code below:
+
 ```{r loadingDataset}
 # Load dataset
 dataset <- read.table(file = "../data/framingham.csv", header = TRUE, sep = ",")
@@ -61,15 +71,18 @@ cat("Instances: ", dataset.dim[1], "\nvariables: ", dataset.dim[2])
 ```
 
 #### Dataset inconsistencies
-The dataset mentioned above was found on the Kaggle website. There are a few problems with this data. First off there is the "education" variable. This variable consists of values 1 through 4, presumably to indicate education levels. However, what these numbers represent is not explained anywhere in the dataset's description. Thus far it is still unclear what exactly these values specify.  
+
+The dataset mentioned above was found on the Kaggle website. There are a few problems with this data. First off there is the "education" variable. This variable consists of values 1 through 4, presumably to indicate education levels. However, what these numbers represent is not explained anywhere in the dataset's description. Thus far it is still unclear what exactly these values specify.\
 An example of this education variable:
+
 ```{r educationExample}
 # Get head of education column and print table
 knitr::kable(head(dataset["education"]), "simple")
 ```
 
-Also included in this dataset are some numeric variables, described on the dataset's page as "continuous". These values all lack a description of their units. Where a variable's unit can sometimes easily be interpreted, like with heart rate, other times it means we end up with no unit whatsoever.  
+Also included in this dataset are some numeric variables, described on the dataset's page as "continuous". These values all lack a description of their units. Where a variable's unit can sometimes easily be interpreted, like with heart rate, other times it means we end up with no unit whatsoever.\
 The following variables have missing units:
+
 ```{r missingUnitList}
 # Print codebook entries where unit is NA
 knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")])
@@ -78,9 +91,11 @@ knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")])
 To resolve these missing units one may look for the source of the data. The source for this data mentioned on the Kaggle page links to another page on Kaggle. The problem is that this page no longer exists. We do however know that this data originates from the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). Searching through this website for our missing units led to [this page](https://www.framinghamheartstudy.org/fhs-for-researchers/data-available-overview/) about available FHS data. From there we find a page on [FHS Dataset Inventory for Public Viewing](https://wwwapp.bumc.bu.edu/FHSresapp/Public/DataSetList) which lists all datasets which can be requested from the FHS team. This page includes documentation on variables. This sounds like progress but there are fifty pages of datasets to choose from. Finding out which of these datasets was used to source the data used in this project would be too time intensive. Therefore, there is no other choice but to work with what we have and use the data without it's corresponding units.
 
 ### Datatype correction
+
 ```{r structure}
 str(dataset)
 ```
+
 When looking at the structure of our dataset above one might notice the fact that some of the data types aren't quite right. For example, a lot of our nominal values are encoded as integers. We shall fix this now:
 
 ```{r fixDatatypes}
@@ -99,14 +114,17 @@ dataset$diabetes <- factor(dataset$diabetes, labels = c("no", "yes"))
 # Change TenYearCHD column from int to no/yes factor
 dataset$TenYearCHD <- factor(dataset$TenYearCHD, labels = c("no", "yes"))
 ```
+
 If we look at the data's structure again now, we'll see it looks a lot better.
+
 ```{r structure2}
 str(dataset)
 ```
 
-
 ### Missing values
-Before we can continue to analysing the dataset with fancy distributions and the likes, we have to decide how to deal with missing values in our dataset. Depending on the amount and type of the missing data there are several methods of approach. Let's take a look at how many missing values each of our variables contains: 
+
+Before we can continue to analysing the dataset with fancy distributions and the likes, we have to decide how to deal with missing values in our dataset. Depending on the amount and type of the missing data there are several methods of approach. Let's take a look at how many missing values each of our variables contains:
+
 ```{r NAvalues}
 # Get the 7th row of the dataset's summary (the NA's row)
 # Then print the rows where number of NA's > 0
@@ -114,18 +132,24 @@ knitr::kable(summary(dataset)[7, which(!is.na(summary(dataset)[7,]))], "simple")
 ```
 
 #### Education
+
 First up is education. We still don't know what the education variable really even means, but one could reasonably assume a lower number to correspond to a lower level of education. However, this approach would be unreliable at best and actively harmful to our conclusions at worst. Therefore it would be best to deal with these missing values by simply getting rid of the entire variable, which we shall do now:
+
 ```{r dropEducation}
 # Remove the education column from the dataset
 dataset <- subset(dataset, select = -c(education))
 ```
 
 #### cigsPerDay - Cigarettes smoked per day
+
 This variable only has a few dozen missing values, so it wouldn't be the end of the world to simply get rid of them. There is a better way however. Let's first take a look at these missing values and check whether all of the missing cigsPerDay values are actually from smokers:
+
 ```{r cigsPerDayNATable}
 knitr::kable(dataset[which(is.na(dataset["cigsPerDay"])), c("currentSmoker", "cigsPerDay")])
 ```
+
 As can be seen in the table above, all of the present NA values are indeed from current smokers. An easy fix for these missing values would be to assign them the median amount of cigarettes smoked per day *by current smokers*, so that is what we'll do next. We'll also check the number of NA values before and after dealing with them as a check.
+
 ```{r cigsPerDayNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["cigsPerDay"])))
@@ -138,13 +162,17 @@ cat("Number of NAs after: ", sum(is.na(dataset["cigsPerDay"])))
 ```
 
 #### BPMeds - Blood pressure medication
+
 To decide what to do with the missing blood pressure medication values, we shall first look at how balanced this variable is. One might reasonably assume that subjects that are on blood pressure medication would be in the minority, but it's still worth it to check.
+
 ```{r BPMedsNAPlot, warning=FALSE}
 ggplot(dataset, aes(x = BPMeds, fill = BPMeds)) + 
   geom_bar() +
   ggtitle("Subjects on blood pressure medication")
 ```
+
 From this plot we may conclude that a large majority of subjects are in fact not on blood pressure medication. We can therefore assume that subjects with missing values for this variable aren't on blood pressure medication either. So let's fix the values:
+
 ```{r BPMedsNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["BPMeds"])))
@@ -155,7 +183,9 @@ cat("Number of NAs after: ", sum(is.na(dataset["BPMeds"])))
 ```
 
 #### totChol - Total cholestorol level
+
 Since total cholestorol level is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+
 ```{r totCholNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["totChol"])))
@@ -168,7 +198,9 @@ cat("Number of NAs after: ", sum(is.na(dataset["totChol"])))
 ```
 
 #### BMI - Body Mass Index
+
 Since total BMI is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+
 ```{r BMINA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["BMI"])))
@@ -181,7 +213,9 @@ cat("Number of NAs after: ", sum(is.na(dataset["BMI"])))
 ```
 
 #### heartRate - Heart rate
+
 Since total heart rate level is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+
 ```{r totHeartRateNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["heartRate"])))
@@ -194,7 +228,9 @@ cat("Number of NAs after: ", sum(is.na(dataset["heartRate"])))
 ```
 
 #### glucose - Glucose levels
+
 Since total glucose levels is a simple integer variable instead of a nominal variable we can just assign the missing values the median of all the other values.
+
 ```{r glucoseNA}
 # Check number of NAs
 cat("Number of NAs before: ", sum(is.na(dataset["glucose"])))
@@ -207,11 +243,12 @@ cat("Number of NAs after: ", sum(is.na(dataset["glucose"])))
 ```
 
 ## Visualisations
+
 Now that we have a complete and workable dataset we can start exploring what our data actually looks like. There's a collection of different plots and figures we'll use to explore our data. However, we are limited in which variables we can use with each analysis. The main differentiating factor here would be whether a variable is numeric or nominal. Certain visualisations cannot be done on nominal data. For example it isn't very useful to compare two factors in a boxplot. We will therefore, on occasion, explore these different types of variables in their own distinct ways.
 
 ### Boxplots split on class variable
-Let us start by looking at the variations in our data. To do this we'll be creating a boxplot for every one of our numeric variables. This will let us examine the variance, as well as some key metrics like the mean, in an easy to grasp visual manner.
-We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
+
+Let us start by looking at the variations in our data. To do this we'll be creating a boxplot for every one of our numeric variables. This will let us examine the variance, as well as some key metrics like the mean, in an easy to grasp visual manner. We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
 
 ```{r boxplots}
 # function that creates a boxplot on dataset given a column name
@@ -228,10 +265,12 @@ plot_list <- lapply(numeric_cols, boxplots)
 # arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
+
 As you may have noticed when exploring these plots, we are presented with a lot of outliers as well as some skewed data. The `glucose` variable would be a great example of the former, while the `cigsPerDay` variable is a wonderful illustration of the latter. We'll try to remedy this in our next step.
 
 ### Boxplots split on class variable - Log transformation
-To try and reduce both the outliers in our data as well as the skewness, we will perform a log transformation which we shall then plot in the same way as in the last step. This should, theoretically, help to reduce both of these problems.  
+
+To try and reduce both the outliers in our data as well as the skewness, we will perform a log transformation which we shall then plot in the same way as in the last step. This should, theoretically, help to reduce both of these problems.\
 When performing this operation we do not just use the `log()` function, but we add one to all of the values first. To explain why we will once again look at the `cigsPerDay` variable. As you might imagine there are a lot of people that simply don't smoke and will therefore have reported zero here. If we were to perform a log transformation now, R would return infinity for all the zero values. These infinity values would then automatically be filtered out by R when trying to create a plot, therefore simply removing these data points from the visualisation. If we add one to all of our values the distribution stays the same, but it does eliminate this problem of infinite values.
 
 ```{r logTransformedBoxplots}
@@ -247,12 +286,15 @@ plot_list <- lapply(numeric_cols, boxplotsLogTransform)
 # arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
-Let's take a look at the same two variables as in our last step, `glucose` and `cigsPerDay`. Examining `glucose`'s boxplot we learn that the boxplot has gotten a little larger, indicating fewer outliers. The difference isn't all that noticeable however, and we are still presented with a lot of outliers. Evaluating the `cigsPerDay` variable presents us with a disparity between the two `TenYearCHD` categories. While the `yes` boxplot clearly shows an improvement in its skewness, the `no` boxplot does not.  
+
+Let's take a look at the same two variables as in our last step, `glucose` and `cigsPerDay`. Examining `glucose`'s boxplot we learn that the boxplot has gotten a little larger, indicating fewer outliers. The difference isn't all that noticeable however, and we are still presented with a lot of outliers. Evaluating the `cigsPerDay` variable presents us with a disparity between the two `TenYearCHD` categories. While the `yes` boxplot clearly shows an improvement in its skewness, the `no` boxplot does not.\
 Overall this transformation doesn't seem to have had too much of an impact. Therefore we won't be using it any further, unless it turns out to be preferable when selecting an algorithm later on in this project.
 
 ### Class distributions
-Now that we know about the variations and outliers in our data, it is time to look at it's distribution. At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.  
+
+Now that we know about the variations and outliers in our data, it is time to look at it's distribution. At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.\
 For every one of our variables we'll make one of these bar plots. We can use these to look for two features in particular. First we can quickly glance at the bar plots for our numeric data and speculate whether they seem to be normally distributed. Secondly we may examine all of the bar plots a little more carefully and look for skewness.
+
 ```{r classDistributions, results="hide"}
 # Function that creates a barplot on dataset given a column name
 barplots <- function(colName) {
@@ -268,12 +310,15 @@ plot_list <- lapply(cols, barplots)
 # arrange these boxplots into one figure
 ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
 ```
-The first thing we notice is that a lot of the categorical variables are very skewed towards one particular value. In fact, all but two of these variables seem to have a significant level of skewness present. Removing most of our variables because of skewness would be foolish, so this is something we'll have to take into account when selecting an algorithm later on. One possible set of techniques to look into would be Synthetic Minority Oversampling Technique or SMOTE for short. What this entails and whether it is a good fit for our needs is something to be looked into later.  
-Something worth noting about our numeric variables is that all of them look to be normally distributed when examined by the naked eye. This is not of immediate concern but certainly good to know.  
+
+The first thing we notice is that a lot of the categorical variables are very skewed towards one particular value. In fact, all but two of these variables seem to have a significant level of skewness present. Removing most of our variables because of skewness would be foolish, so this is something we'll have to take into account when selecting an algorithm later on. One possible set of techniques to look into would be Synthetic Minority Oversampling Technique or SMOTE for short. What this entails and whether it is a good fit for our needs is something to be looked into later.\
+Something worth noting about our numeric variables is that all of them look to be normally distributed when examined by the naked eye. This is not of immediate concern but certainly good to know.\
 In a similar vain, one might notice a small detail that wasn't mentioned in our dataset's source. The age range for this dataset looks to be thirty to seventy year olds. Again, not something that is of immediate concern, but certainly good to know.
 
 ### Correlation
+
 Many machine learning algorithms assume all attributes are independent. Therefore it is important to check whether the variables in our dataset are actually independent, or if they turn out to be correlated. We'll do this by creating a correlation matrix. In this matrix the size and shade of the circle indicate the amount of correlation. A larger circle indicates a stronger correlation, so a smaller circle in turn indicates the opposite. A blue shade demonstrates a positive correlation while a red shade illustrates a negative correlation. Therefore the lighter shades in between indicate the lack of a correlation.
+
 ```{r correlation}
 # Convert all columns in the dataset to numeric data
 dataset.numeric <- sapply(dataset, as.integer)
@@ -284,13 +329,15 @@ corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset
          title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0), cl.cex = 0.75)
 ```
 
-A good control point indicating the validity of this correlation matrix can be found between diabetes and glucose. This correlation has been studied extensively to the point where it is nearly common knowledge that high glucose levels correlate with diabetes. Seeing this correlation in our own data is a nice confirmation that this plot is correct. Apart from that, the correlation between these two variables indicates it might be preferable to choose one of them over the other going forward.  
-Let us now dive into the other correlations. One fairly obvious correlation is the one found between current smokers and the amount of cigarettes smoked per day. Since these variables are so similar and definitely not independent of each other, it might be worth dropping one of them depending on our choice of algorithm later.  
-The same can be said for systolic blood pressure and diastolic blood pressure. Since the former measures the amount of force put on the arteries as the heart beats, and the latter measures the amount of force on the arteries when the heart is in a state of rest, they might as well be combined into a single blood pressure variable if the chosen algorithm requires it.  
+A good control point indicating the validity of this correlation matrix can be found between diabetes and glucose. This correlation has been studied extensively to the point where it is nearly common knowledge that high glucose levels correlate with diabetes. Seeing this correlation in our own data is a nice confirmation that this plot is correct. Apart from that, the correlation between these two variables indicates it might be preferable to choose one of them over the other going forward.\
+Let us now dive into the other correlations. One fairly obvious correlation is the one found between current smokers and the amount of cigarettes smoked per day. Since these variables are so similar and definitely not independent of each other, it might be worth dropping one of them depending on our choice of algorithm later.\
+The same can be said for systolic blood pressure and diastolic blood pressure. Since the former measures the amount of force put on the arteries as the heart beats, and the latter measures the amount of force on the arteries when the heart is in a state of rest, they might as well be combined into a single blood pressure variable if the chosen algorithm requires it.\
 Apart from correlating with each other the two variables named above correlate with hypertension as well. This too is a fairly obvious correlation since hypertension means the subject has high blood pressure. Another possible solution would therefore be to combine all three of these variables into a single features if necessary.
 
 ### PCA - Principal Component Analysis
+
 When trying to determine whether our data clusters together one might be inclined to create a scatter plot. This is a valid approach when trying to compare two different variables. Comparing three different variables would already be slightly more challenging since this would require a three dimensional plot. This would become physically impossible when trying to compare four or more variables since our mortal souls are limited to a mere three dimensional space. This is where Principle Component Analysis, or PCA for short, comes in. PCA is a technique where the dimensions (variables) are reduced by converting them into Principle Components. These PCs are ordered by their impact on the variation of the data, where PC1 has the highest impact. The first two PCs will be plotted against each other, where every variable has an arrow indicating it's impact on these first two PCs. Since the plotted PCs have the highest impact on the data's variance, and the biggest arrows have the largest impact on the PCs, larger arrows indicate important variables. Furthermore arrows pointing the same way indicate positive correlation, while opposing arrows indicate negative correlation.
+
 ```{r PCA}
 # Get PCA calculation on numeric dataset
 pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
@@ -300,10 +347,13 @@ ggbiplot(pca, obs.scale = 1, var.scale = 1,
   scale_color_discrete(name = "Risk of CHD") +
   ggtitle("Principal Component Analysis")
 ```
+
 In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (21.6%) difference along the x-axis are to be considered more significant than differences along the y-axis.
 
 ## Exporting data
+
 Now that we have analysed our data and cleaned it accordingly we can go ahead and export it. We'll export into two formats: Comma Separated Values (csv) for easy usage with reporting, and Attribute Relation File Format (ARFF) for usage in the Weka software package. We'll place both of these new data files in the data folder of this project's directory.
+
 ```{r exportData}
 # To CSV
 write.csv(dataset, file = "../data/processedData.csv")
@@ -312,16 +362,65 @@ RWeka::write.arff(dataset, file = "../data/prrocessedData.arff")
 ```
 
 # Machine Learning algorithm
+
 Now that we have processed and exported our dataset we can take a big step forward in this project. It is finally time to look at how we shall apply methods of Machine Learning to our data. For easy, visual interaction with our data we will open the previously exported ARFF file in Weka. Once loaded we can start to do all kinds of fun things to our dataset. Before we just start clicking random buttons, how about we discuss our options first.
 
 ## Algorithm metrics
+
 Instead of just haphazardly trying out different algorithms, it'd be a better idea to go about this process a bit more systematically. We'll start by listing some important metrics to consider when comparing algorithms and briefly discussing their impact regarding this particular dataset. After this we'll inventorise for which algorithms we'll collect these metrics.
 
 ### Quality & performance metrics
 
+Weka provides us with loads of metrics which we can combine into performance graphs in whichever way we'd like. Taking in every single one of these measurements would be an overwhelming amount of information, so we'll pick the most important ones and discuss them below.
+
+#### Speed
+
+Speed is far from the most important metric when considering the context of our data. After all, this isn't a big social media website needing to fulfill millions of requests any time of day. It is however still an interesting metric remember since the difference between a few seconds and half an hour is still fairly significant.
+
+#### Accuracy
+
+Quick? Yes. Reliable? No. Accuracy is right there, front and centre, when running any algorithm and it is easy to grasp. [Yet solutions that are the first thing you think of, seem sensible, and are easy to implement are often terrible, ineffective solutions, once implemented will drag on civilisation forever](https://youtu.be/oAHbLRjF0vo?t=31). And so it is for accuracy in the machine learning sphere. Often accuracy is still used as the be all and end all solution for grading an algorithms performance, especially by folk new to the field. It will be included here since it is still a useful indication, but we will combine it with other, more informative solutions.
+
+#### The confusion matrix
+
+This matrix is important to understand since it's the key to understanding the metrics yet to be discussed. The confusion matrix does exactly as it's name suggests. It provides us with an overview of how "confused" our algorithm is, and communicates this in an easy to understand matrix.\
+In this environment "confused" refers to the instances the algorithm in question labelled improperly. This can be in the form of instances incorrectly labelled as positive, known as the "false positives" (FP). Counter to that, we can have positive instances labelled as negative instead. We call these "false negatives" (FN). Correctly labelled records are intuitively referred to as "true positives" (TP) and "true negatives" (TN). The number of real positive and negative cases in the data are known as "condition positive" (P) and "condition negative" (N) respectively.
+
+An example of a confusion matrix:
+
+\begin{table}[h]
+\begin{tabular}{ |l|l||l|l|  }
+  \hline
+  & \multicolumn{3}{c|}{\textbf{Predicted condition}} \tabularnewline
+  \hline
+  & & \textbf{Positive} & \textbf{Negative} \\
+  \hline
+  \hline
+  \multirow{3}{*}{\rotatebox{90}{\textbf{Actual condition \hspace{1em}}}} & & & \\
+  & & & \\
+  & \textbf{Positive} & 52 (TP) & 8 (FN) \\ 
+  & & & \\
+  & & & \\
+  \cline{2-4}
+  & & & \\
+  & & & \\
+  & \textbf{Negative} & 4 (FP) & 32 (TN) \\
+  & & & \\
+  & & & \\
+  \hline
+\end{tabular}
+\caption{Example confusion matrix}
+\label{table:vars}
+\end{table}
+
+
+#### F-measure
+
+#### ROC Area
+
 ### Algorithm exploration
 
-### Algorithm optimisation 
+### Algorithm optimisation
 
 ### Meta-learners
 
