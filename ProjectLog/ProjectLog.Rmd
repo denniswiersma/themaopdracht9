@@ -4,6 +4,8 @@ author: "Dennis Wiersma"
 date: "`r Sys.Date()`"
 header-includes:
   - \usepackage{multirow}
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
 output: 
   pdf_document: 
     number_sections: yes
@@ -32,6 +34,9 @@ library("corrplot")
 \newpage
 \tableofcontents
 \newpage
+\listoffigures
+\listoftables
+\newpage
 ```
 # Exploratory Data Analysis
 
@@ -54,7 +59,7 @@ The codebook will be loaded as follows:
 # Load codebook
 codeBook <- read.table(file = "../CodeBook.txt", header = TRUE, sep = "|")
 # Create table w/ codebook contents
-knitr::kable(codeBook, "simple")
+knitr::kable(codeBook, "simple", caption = "Codebook with variable descriptions.")
 ```
 
 #### Loading the dataset
@@ -77,7 +82,7 @@ An example of the education variable:
 
 ```{r educationExample}
 # Get head of education column and print table
-knitr::kable(head(dataset["education"]), "simple")
+knitr::kable(head(dataset["education"]), "simple", caption = "First six values in the education column of the dataset.")
 ```
 
 Also included in this dataset are some numeric variables, described on the dataset's page as "continuous". These values all lack descriptions of their units. Where a variable's unit can sometimes easily be inferred, like with heart rate, other times it means we end up with no unit whatsoever.\
@@ -85,7 +90,7 @@ The following variables have missing units:
 
 ```{r missingUnitList}
 # Print codebook entries where unit is NA
-knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")])
+knitr::kable(codeBook[which(is.na(codeBook["unit"])), c("name", "unit")], caption = "List of variables that lack units.")
 ```
 
 To resolve these missing units one may look for the source of the data. The source mentioned on the Kaggle page links to another page on Kaggle. The problem is that this page no longer exists. We do however know that this data originates from the [Framingham Heart Study](https://www.framinghamheartstudy.org/) (FHS). Searching through this website for our missing units led to [this page](https://www.framinghamheartstudy.org/fhs-for-researchers/data-available-overview/) about available FHS data. From there we find a page on [FHS Dataset Inventory for Public Viewing](https://wwwapp.bumc.bu.edu/FHSresapp/Public/DataSetList) which lists all datasets which can be requested from the FHS team. This page includes documentation on variables. This sounds like progress but there are fifty pages of datasets to choose from. Finding out which of these datasets was used to source the data used in this project would be too time intensive. Therefore, there is no other choice but to work with what we have and use the data without it's corresponding units.
@@ -128,7 +133,7 @@ Before we can continue to analysing the dataset with fancy distributions and the
 ```{r NAvalues}
 # Get the 7th row of the dataset's summary (the NA's row)
 # Then print the rows where number of NA's > 0
-knitr::kable(summary(dataset)[7, which(!is.na(summary(dataset)[7,]))], "simple")
+knitr::kable(summary(dataset)[7, which(!is.na(summary(dataset)[7,]))], "simple", caption = "Number of missing values for each variable that contains missing values.")
 ```
 
 #### Education
@@ -145,7 +150,7 @@ dataset <- subset(dataset, select = -c(education))
 This variable only has a few dozen missing values, so it wouldn't be the end of the world to simply get rid of them. There is a better way however. Let's first take a look at these missing values and check whether all of the missing cigsPerDay values are actually from smokers:
 
 ```{r cigsPerDayNATable}
-knitr::kable(dataset[which(is.na(dataset["cigsPerDay"])), c("currentSmoker", "cigsPerDay")])
+knitr::kable(dataset[which(is.na(dataset["cigsPerDay"])), c("currentSmoker", "cigsPerDay")], caption = "All instances of cigsPerDay that are missing values.")
 ```
 
 As can be seen in the table above, all of the present NA values are indeed from current smokers. An easy fix for these missing values would be to assign them the median amount of cigarettes smoked per day *by current smokers*, so that is what we'll do next. We'll also check the number of NA values before and after dealing with them as a check.
@@ -250,7 +255,7 @@ Now that we have a complete and workable dataset we can start exploring what our
 
 Let us start by looking at the variations in our data. To do this we'll be creating a boxplot for every one of our numeric variables. This will let us examine the variance, as well as some key metrics like the mean, in an easy to grasp visual manner. We split the boxplots up into two groups per variable based on the `TenYearCHD` variable. This let's us get a sense of whether our class variable has an impact on the numeric variable at hand.
 
-```{r boxplots}
+```{r boxplots, fig.cap="Collection of boxplots for each numeric variable, split on class variable."}
 # function that creates a boxplot on dataset given a column name
 boxplots <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = !!sym(colName), fill = TenYearCHD)) +
@@ -273,7 +278,7 @@ As you may have noticed when exploring these plots, we are presented with a lot 
 To try and reduce both the outliers in our data as well as the skewness, we will perform a log transformation which we shall then plot in the same way as in the last step. This should, theoretically, help to reduce both of these problems.\
 When performing this operation we do not just use the `log()` function, but we add one to all of the values first. To explain why we will once again look at the `cigsPerDay` variable. As you might imagine there are a lot of people that simply don't smoke and will therefore have reported zero cigarettes smoked. If we were to perform a log transformation now, R would return infinity for all the zero values. These infinity values would then automatically be filtered out by R when trying to create a plot, therefore simply removing these data points from the visualisation. If we add one to all of our values the distribution stays the same, but it does eliminate this problem of infinite values.
 
-```{r logTransformedBoxplots}
+```{r logTransformedBoxplots,fig.height=4 , fig.cap="Collection of boxplots for each log transformed numeric variable, split on class variable."}
 # function that creates a boxplot on log of dataset given a column name
 boxplotsLogTransform <- function(colName) {
   ggplot(dataset, aes(x = TenYearCHD, y = log(!!sym(colName) + 1), fill = TenYearCHD)) +
@@ -295,11 +300,13 @@ Overall this transformation doesn't seem to have had too much of an impact. We t
 Now that we know about the variations and outliers in our data, it is time to look at it's distribution. At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.\
 For every one of our variables we'll make one of these bar plots. We can use these to look for two features in particular. First we can quickly glance at the bar plots for our numeric data and speculate whether they seem to be normally distributed. Secondly we may examine all of the bar plots a little more carefully and look for skewness.
 
-```{r classDistributions, results="hide"}
+\newpage
+
+```{r classDistributions, fig.height=7.5, fig.cap="Collection of barplots for every variable, coloured by class variable."}
 # Function that creates a barplot on dataset given a column name
 barplots <- function(colName) {
   ggplot(dataset, aes(x = !!sym(colName), fill = !!sym(colName))) +
-  geom_bar(show.legend = FALSE) +
+  geom_bar(show.legend = FALSE) + ylab("") +
   theme(text=element_text(size=8))
 }
 
@@ -308,7 +315,7 @@ cols <- colnames(dataset)
 # execute barplots function on every column
 plot_list <- lapply(cols, barplots)
 # arrange these boxplots into one figure
-ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
+ggarrange(plotlist = plot_list, ncol = 4, nrow = 4)
 ```
 
 The first thing we notice is that a lot of the categorical variables are very skewed towards one particular value. In fact, all but two of these variables seem to have a significant level of skewness present. Removing most of our variables because of skewness would be foolish, so this is something we'll have to take into account when selecting an algorithm later on. One possible set of techniques to look into would be Synthetic Minority Oversampling Technique or SMOTE for short. What this entails and whether it is a good fit for our needs is something to be looked into later.\
@@ -319,7 +326,7 @@ In a similar vain, one might notice a small detail that wasn't mentioned in our 
 
 Many machine learning algorithms assume all attributes are independent. It is therefore important to check whether the variables in our dataset are actually independent, or if they turn out to be correlated. We'll do this by creating a correlation matrix. In this matrix the size and shade of the circle indicate the amount of correlation. A larger circle indicates a stronger correlation, so a smaller circle in turn indicates the opposite. A blue shade demonstrates a positive correlation while a red shade illustrates a negative correlation. Therefore the lighter shades in between indicate the lack of a correlation.
 
-```{r correlation}
+```{r correlation, fig.cap="Matrix of degree of correlation between variables."}
 # Convert all columns in the dataset to numeric data
 dataset.numeric <- sapply(dataset, as.integer)
 # Get correlation metrics on the dataset
@@ -338,7 +345,7 @@ Apart from correlating with each other the two variables named above correlate w
 
 When trying to determine whether our data clusters together one might be inclined to create a scatter plot. This is a valid approach when trying to compare two different variables. Comparing three different variables would already be slightly more challenging since this would require a three dimensional plot. This would become physically impossible however when trying to compare four or more variables, since our mortal souls are limited to a mere three dimensional space. This is where Principle Component Analysis, or PCA for short, comes in. PCA is a technique where the dimensions (variables) are reduced by converting them into Principle Components. These PCs are ordered by their impact on the variation of the data, where PC1 has the highest impact. The first two PCs will be plotted against each other, where every variable has an arrow indicating it's impact on these first two PCs. Since the plotted PCs have the highest impact on the data's variance, and the biggest arrows have the largest impact on the PCs, larger arrows indicate more significant variables. Furthermore arrows pointing the same way indicate positive correlation, while opposing arrows indicate negative correlation.
 
-```{r PCA}
+```{r PCA, fig.cap="PCA plot charting PC2 against PC1."}
 # Get PCA calculation on numeric dataset
 pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
 # Plot PCA calculation
@@ -390,6 +397,7 @@ In this environment "confused" refers to the instances the algorithm in question
 An example of a confusion matrix:
 
 \begin{table}[h]
+\caption{Example confusion matrix.}
 \centering
   \begin{tabular}{ |l|l||l|l|  }
     \hline
@@ -411,7 +419,6 @@ An example of a confusion matrix:
     & & & \\
     \hline
   \end{tabular}
-\caption{Example confusion matrix}
 \label{table:confMatrix}
 \end{table}
 
@@ -434,6 +441,7 @@ The latter of these three options seems like an abominable outcome, but it may n
 Now that we know what to look for in an algorithm we can summarise this in a short overview.
 
 \begin{table}[h]
+\caption{Overview of algorithm scoring metrics.}
 \centering
   \begin{tabular}{ |l||l|l|  }
     \hline
@@ -449,7 +457,6 @@ Now that we know what to look for in an algorithm we can summarise this in a sho
     \textbf{\textit{ROC Area}} & Area under ROC curve where 0.5 equals a random guess & Larger deviation from 0.5 is better \\
     \hline
   \end{tabular}
-\caption{Overview of algorithm scoring metrics}
 \label{table:metricsOverview}
 \end{table}
 
