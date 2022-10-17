@@ -412,7 +412,7 @@ An example of a confusion matrix:
     \hline
   \end{tabular}
 \caption{Example confusion matrix}
-\label{table:vars}
+\label{table:confMatrix}
 \end{table}
 
 \newpage
@@ -428,6 +428,30 @@ It represents the harmonic mean of precision and recall, where an outcome of $1$
 
 Last but not least is the Receiver Operating Characteristic Area. This name may seem a little odd, but that's because electrical engineers and radar engineers came up with it. Like with the F-measure, the ROC Area is another metric that's made up of two other measures, those being the true positive rate (TPR) (also referred to as benefit) and the false positive rate (FPR) (also referred to as cost). These respectively describe the instances correctly and incorrectly labelled as positive. When we plot the cumulative distribution function of these two metrics against each other, with TRP on the y-axis and FPR on the y-axis, we may calculate the area under the curve. An area of $1$ corresponds to a most optimal model, an area of exactly $0.5$ corresponds to as good as a random guess, and an area below $0.5$ corresponds to worse than a random guess. \
 The latter of these three options seems like an abominable outcome, but it may not be so. If we can *reliably* predict the *wrong* answer, we can simply flip it around to reliably predict the *right* answer. This method will work either way, as long as we're sure enough about the answer's correctness.
+
+#### Metrics overview
+
+Now that we know what to look for in an algorithm we can summarise this in a short overview.
+
+\begin{table}[h]
+\centering
+  \begin{tabular}{ |l||l|l|  }
+    \hline
+    \textbf{Metric} & \textbf{Description} & \textbf{Desired outcome} \\
+    \hline
+    \hline
+    \textbf{\textit{Speed}} & How many seconds it takes to produce the model & Lower is better \\ 
+    \hline
+    \textbf{\textit{Accuracy}} & Fraction of correctly labelled instances & Higher is better \\
+    \hline
+    \textbf{\textit{F-measure}} & Harmonic mean of precision and recall & Higher is better \\
+    \hline
+    \textbf{\textit{ROC Area}} & Area under ROC curve where 0.5 equals a random guess & Larger deviation from 0.5 is better \\
+    \hline
+  \end{tabular}
+\caption{Overview of algorithm scoring metrics}
+\label{table:metricsOverview}
+\end{table}
 
 ### Algorithm exploration
 
