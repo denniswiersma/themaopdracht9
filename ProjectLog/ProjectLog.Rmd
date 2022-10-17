@@ -361,6 +361,7 @@ write.csv(dataset, file = "../data/processedData.csv")
 RWeka::write.arff(dataset, file = "../data/prrocessedData.arff")
 ```
 
+\newpage
 # Machine Learning algorithm
 
 Now that we have processed and exported our dataset we can take a big step forward in this project. It is finally time to look at how we shall apply methods of Machine Learning to our data. For easy, visual interaction with our data we will open the previously exported ARFF file in Weka. Once loaded we can start to do all kinds of fun things to our dataset. Before we just start clicking random buttons though, we should discuss our options first.
@@ -389,32 +390,39 @@ In this environment "confused" refers to the instances the algorithm in question
 An example of a confusion matrix:
 
 \begin{table}[h]
-\begin{tabular}{ |l|l||l|l|  }
-  \hline
-  & \multicolumn{3}{c|}{\textbf{Predicted condition}} \tabularnewline
-  \hline
-  & & \textbf{Positive} & \textbf{Negative} \\
-  \hline
-  \hline
-  \multirow{3}{*}{\rotatebox{90}{\textbf{Actual condition \hspace{1em}}}} & & & \\
-  & & & \\
-  & \textbf{Positive} & 52 (TP) & 8 (FN) \\ 
-  & & & \\
-  & & & \\
-  \cline{2-4}
-  & & & \\
-  & & & \\
-  & \textbf{Negative} & 4 (FP) & 32 (TN) \\
-  & & & \\
-  & & & \\
-  \hline
-\end{tabular}
+\centering
+  \begin{tabular}{ |l|l||l|l|  }
+    \hline
+    & \multicolumn{3}{c|}{\textbf{Predicted condition}} \tabularnewline
+    \hline
+    & & \textbf{Positive} & \textbf{Negative} \\
+    \hline
+    \hline
+    \multirow{3}{*}{\rotatebox{90}{\textbf{Actual condition \hspace{1em}}}} & & & \\
+    & & & \\
+    & \textbf{Positive} & 52 (TP) & 8 (FN) \\ 
+    & & & \\
+    & & & \\
+    \cline{2-4}
+    & & & \\
+    & & & \\
+    & \textbf{Negative} & 4 (FP) & 32 (TN) \\
+    & & & \\
+    & & & \\
+    \hline
+  \end{tabular}
 \caption{Example confusion matrix}
 \label{table:vars}
 \end{table}
 
+\newpage
 
 #### F-measure
+
+This metric is a score based on two other metrics, both of which are based on the confusion matrix discussed above. The two parts that make up the F-measure are the precision (also known as positive predictive value (PPV)) and the recall (also known as sensitivity, hit rate, or true positive rate (TPR)). The former represents the fraction of correctly labelled instances out of all instances labelled as positive. In formulaic form it would be described by $PPV = \frac{TP}{TP + FP}$. The latter of our two parts describes the fraction of positive instances which were labelled as so. It's formula turns out as follows: $TPR = \frac{TP}{P} = \frac{TP}{TP +FN}$. \
+Both of these values can then be combined into the F-measure with the following formula: 
+$$F = 2 \times \frac{PPV \times TPR}{PPV + TPR} = \frac{2TP}{2TP + FP + FN}$$ 
+It represents the harmonic mean of precision and recall, where an outcome of $1$ would indicate both of these values are perfect and an outcome of $0$ would indicate both are zero as well.
 
 #### ROC Area
 
