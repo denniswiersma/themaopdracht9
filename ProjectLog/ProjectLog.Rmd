@@ -462,6 +462,14 @@ Now that we know what to look for in an algorithm we can summarise this in a sho
 
 ### Algorithm exploration
 
+We know what to test for, but what do we actually want to test? Well, machine learning algorithms of course, but which ones? We'll pick a few algorithms from each of the main categories: \
+As a start we'll pick ZeroR as a baseline, and then add OneR as a slightly more complex addition in the rules division. \
+In the Trees section we'll pick J48 since it can handle both numeric and nominal data and random forest will be generated as well. \
+In the lazy learning department we'll go with IBk, otherwise known as k-nearest neighbours. \
+Last but not least we shall add Naive Bayes to our list of algorithms. \
+To start we'll run all of these algorithms with their default settings performing 10-fold cross validation on the dataset.
+
+
 ### Algorithm optimisation
 
 ### Meta-learners
