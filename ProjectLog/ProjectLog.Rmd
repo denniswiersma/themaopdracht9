@@ -383,7 +383,7 @@ Weka provides us with loads of metrics which we can combine into performance gra
 
 #### Speed
 
-Speed is far from the most important metric when considering the context of our data. After all, this isn't some big social media website needing to fulfill millions of requests at any time of day. It is however still an interesting metric to remember since the difference between a few seconds and half an hour is still fairly significant.
+Speed is far from the most important metric when considering the context of our data. After all, this isn't some big social media website needing to fulfill millions of requests at any time of day. It is however still an interesting metric to remember since the difference between testing an instance in a few seconds versus half an hour is still fairly significant.
 
 #### Accuracy
 
