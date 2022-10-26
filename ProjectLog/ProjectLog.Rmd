@@ -513,6 +513,34 @@ To start we'll run all of these algorithms with their default settings, using Ze
 
 The thing to notice in these results is that with both the Accuracy as well as the F-measure metric, we get performances which are statistically significantly worse than ZeroR, our baseline algorithm. Even though the ROC Area looks fine, this result isn't any good. This occurance can be explained by our skewed data from TODO chapter 2.1.3, in particular our skewed class variable. Since 84.8% of our TenYearCHD variable is classified as `no` even ZeroR will get an accuracy of 84.8%, even though this algorithm isn't any good. We will fix this issue with the method we mentioned before; SMOTE. 
 
+#### SMOTE
+
+With this technique we will artificially create extra instances of the `yes` kind of our class variable based on other values in the dataset. Luckily we can simply do this in Weka. First we open our existing dataset in the Weka explorer after which we will select the `SMOTE` filter under `filters > supervised > instance`. We then tune the parameters as follows: classValue = 0, nearestNeighbors = 5, percentage = 450. This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. We can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
+
+\begin{table}[thb]
+\caption{\label{DefaultComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
+\hline
+\textbf{Algorithm} & \textit{ZeroR} & \textit{OneR} & & \textit{J48} & & \textit{RandomForest} & & \textit{IBk} & & \textit{NaiveBayes} & & \textit{SimpleLogistic} & & \textit{SMO} & \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.02 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$\\
+\hline
+\textbf{Accuracy} & 50.36 & 87.90 & $\circ$ & 85.61 & $\circ$ & 86.63 & $\circ$ & 77.16 & $\circ$ & 62.38 & $\circ$ & 67.33 & $\circ$ & 67.22 & $\circ$\\
+\hline
+\textbf{F-measure} & 0.67 & 0.89 & $\circ$ & 0.86 & $\circ$ & 0.87 & $\circ$ & 0.75 & $\circ$ & 0.67 &         & 0.67 &         & 0.66 &        \\
+\hline
+\textbf{ROC Area} & 0.50 & 0.88 & $\circ$ & 0.88 & $\circ$ & 0.94 & $\circ$ & 0.77 & $\circ$ & 0.70 & $\circ$ & 0.73 & $\circ$ & 0.67 & $\circ$\\
+\hline
+\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+\newpage
+
+We now see that ZeroR doesn't perform nearly as well as it did before, and most of the other algorithms are already significantly better. This is a much better result and more accurately reflects what initial results should look like.
+
 ### Algorithm optimisation
 
 ### Meta-learners
