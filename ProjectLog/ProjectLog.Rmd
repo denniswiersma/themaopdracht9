@@ -492,20 +492,20 @@ To start we'll run all of these algorithms with their default settings, using Ze
 
 
 \begin{table}[thb]
-\caption{\label{DefaultComparison}Comparison of ML algorithms based on elapsed testing time, accuracy, F-measure, and ROC Area.}
+\caption{\label{DefaultComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, F-measure, and ROC Area, using ZeroR as a baseline.}
 \footnotesize
-{\centering \begin{tabular}{l||rr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
-Algorithm & ZeroR & OneR & & J48 & & RandomForest & & IBk & & NaiveBayes & & SimpleLogistic & & SMO & \\
+\textbf{Algorithm} & \textit{ZeroR} & \textit{OneR} & & \textit{J48} & & \textit{RandomForest} & & \textit{IBk} & & \textit{NaiveBayes} & & \textit{SimpleLogistic} & & \textit{SMO} & \\
 \hline
 \hline
-Elapsed time testing & 0.00 & 0.00 &         & 0.00 &         & 0.01 & $\circ$ & 0.04 & $\circ$ & 0.00 & $\circ$ & 0.00 &         & 0.00 &        \\
+\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.01 & $\circ$ & 0.04 & $\circ$ & 0.00 & $\circ$ & 0.00 &         & 0.00 &        \\
 \hline
-Accuracy & 84.80 & 84.41 & $\bullet$ & 83.98 & $\bullet$ & 84.92 &         & 78.52 & $\bullet$ & 81.79 & $\bullet$ & 85.43 & $\circ$ & 84.79 &        \\
+\textbf{Accuracy} & 84.80 & 84.41 & $\bullet$ & 83.98 & $\bullet$ & 84.92 &         & 78.52 & $\bullet$ & 81.79 & $\bullet$ & 85.43 & $\circ$ & 84.79 &        \\
 \hline
-F-measure & 0.92 & 0.92 & $\bullet$ & 0.91 & $\bullet$ & 0.92 &         & 0.87 & $\bullet$ & 0.90 & $\bullet$ & 0.92 & $\circ$ & 0.92 &        \\
+\textbf{F-measure} & 0.92 & 0.92 & $\bullet$ & 0.91 & $\bullet$ & 0.92 &         & 0.87 & $\bullet$ & 0.90 & $\bullet$ & 0.92 & $\circ$ & 0.92 &        \\
 \hline
-ROC Area & 0.50 & 0.51 & $\circ$ & 0.64 & $\circ$ & 0.69 & $\circ$ & 0.56 & $\circ$ & 0.71 & $\circ$ & 0.73 & $\circ$ & 0.50 &        \\
+\textbf{ROC Area} & 0.50 & 0.51 & $\circ$ & 0.64 & $\circ$ & 0.69 & $\circ$ & 0.56 & $\circ$ & 0.71 & $\circ$ & 0.73 & $\circ$ & 0.50 &        \\
 \hline
 \multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
 \end{tabular} \footnotesize \par}
