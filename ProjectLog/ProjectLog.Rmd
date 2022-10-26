@@ -513,7 +513,7 @@ To start we'll run all of these algorithms with their default settings, using Ze
 \hline
 \textbf{ROC Area} & 0.50 & 0.51 & $\circ$ & 0.64 & $\circ$ & 0.69 & $\circ$ & 0.56 & $\circ$ & 0.71 & $\circ$ & 0.73 & $\circ$ & 0.50 &        \\
 \hline
-\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
+\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
 \end{tabular} \footnotesize \par}
 \end{table}
 
@@ -545,7 +545,7 @@ This means we select the right instances to increase, base new instances on it's
 \hline
 \textbf{ROC Area} & 0.50 & 0.88 & $\circ$ & 0.88 & $\circ$ & 0.94 & $\circ$ & 0.77 & $\circ$ & 0.70 & $\circ$ & 0.73 & $\circ$ & 0.67 & $\circ$\\
 \hline
-\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
+\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
 \end{tabular} \footnotesize \par}
 \end{table}
 
