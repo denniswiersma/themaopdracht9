@@ -521,7 +521,11 @@ The thing to notice in these results is that with both the Accuracy as well as t
 
 #### SMOTE
 
-With this technique we will artificially create extra instances of the `yes` kind of our class variable based on other values in the dataset. Luckily we can simply do this in Weka. First we open our existing dataset in the Weka explorer after which we will select the `SMOTE` filter under `filters > supervised > instance`. We then tune the parameters as follows: classValue = 0, nearestNeighbors = 5, percentage = 450. This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. We can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
+With this technique we will artificially create extra instances of the `yes` kind of our class variable based on other values in the dataset. Luckily we can simply do this in Weka. First we open our existing dataset in the Weka explorer after which we will select the `SMOTE` filter under `filters > supervised > instance`. We then tune the parameters as follows: \
+`classValue` = 0 \
+`nearestNeighbors` = 5 \
+`percentage` = 450 \
+This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. We can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
 
 \begin{table}[thb]
 \caption{\label{DefaultComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
