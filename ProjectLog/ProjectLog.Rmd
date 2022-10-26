@@ -450,7 +450,7 @@ Now that we know what to look for in an algorithm we can summarise this in a sho
     \textbf{Metric} & \textbf{Description} & \textbf{Desired outcome} \\
     \hline
     \hline
-    \textbf{\textit{Speed}} & How many seconds it takes to produce the model & Lower is better \\ 
+    \textbf{\textit{Speed}} & How many seconds it takes to test the model & Lower is better \\ 
     \hline
     \textbf{\textit{Accuracy}} & Fraction of correctly labelled instances & Higher is better \\
     \hline
