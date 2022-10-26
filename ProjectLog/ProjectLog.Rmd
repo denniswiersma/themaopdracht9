@@ -454,9 +454,11 @@ Now that we know what to look for in an algorithm we can summarise this in a sho
     \hline
     \textbf{\textit{Accuracy}} & Fraction of correctly labelled instances & Higher is better \\
     \hline
+    \textbf{\textit{False Negative Rate}} & Fraction of incorrectly labelled positive instances & Lower is better \\
+    \hline
     \textbf{\textit{F-measure}} & Harmonic mean of precision and recall & Higher is better \\
     \hline
-    \textbf{\textit{ROC Area}} & Area under ROC curve where 0.5 equals a random guess & Larger deviation from 0.5 is better \\
+    \textbf{\textit{ROC Area}} & Area under ROC curve where 0.5 equals a random guess & Deviation from 0.5 is better \\
     \hline
   \end{tabular}
 \label{table:metricsOverview}
@@ -505,6 +507,8 @@ To start we'll run all of these algorithms with their default settings, using Ze
 \hline
 \textbf{Accuracy} & 84.80 & 84.41 & $\bullet$ & 83.98 & $\bullet$ & 84.92 &         & 78.52 & $\bullet$ & 81.79 & $\bullet$ & 85.43 & $\circ$ & 84.79 &        \\
 \hline
+\textbf{False Negative Rate} & 0.00 & 0.01 & $\circ$ & 0.03 & $\circ$ & 0.01 & $\circ$ & 0.12 & $\circ$ & 0.08 & $\circ$ & 0.01 & $\circ$ & 0.00 &        \\
+\hline
 \textbf{F-measure} & 0.92 & 0.92 & $\bullet$ & 0.91 & $\bullet$ & 0.92 &         & 0.87 & $\bullet$ & 0.90 & $\bullet$ & 0.92 & $\circ$ & 0.92 &        \\
 \hline
 \textbf{ROC Area} & 0.50 & 0.51 & $\circ$ & 0.64 & $\circ$ & 0.69 & $\circ$ & 0.56 & $\circ$ & 0.71 & $\circ$ & 0.73 & $\circ$ & 0.50 &        \\
@@ -530,6 +534,8 @@ With this technique we will artificially create extra instances of the `yes` kin
 \textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.02 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$\\
 \hline
 \textbf{Accuracy} & 50.36 & 87.90 & $\circ$ & 85.61 & $\circ$ & 86.63 & $\circ$ & 77.16 & $\circ$ & 62.38 & $\circ$ & 67.33 & $\circ$ & 67.22 & $\circ$\\
+\hline
+\textbf{False Negative Rate} & 0.00 & 0.00 &         & 0.10 & $\circ$ & 0.13 & $\circ$ & 0.30 & $\circ$ & 0.22 & $\circ$ & 0.33 & $\circ$ & 0.36 & $\circ$\\
 \hline
 \textbf{F-measure} & 0.67 & 0.89 & $\circ$ & 0.86 & $\circ$ & 0.87 & $\circ$ & 0.75 & $\circ$ & 0.67 &         & 0.67 &         & 0.66 &        \\
 \hline
