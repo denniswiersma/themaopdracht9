@@ -4,6 +4,7 @@ author: "Dennis Wiersma"
 date: "`r Sys.Date()`"
 header-includes:
   - \usepackage{multirow}
+  - \usepackage{nameref}
   - \usepackage{float}
   - \floatplacement{figure}{H}
 output: 
@@ -296,6 +297,7 @@ Let's take a look at the same two variables as in our last step, `glucose` and `
 Overall this transformation doesn't seem to have had too much of an impact. We therefore won't be using it any further, unless it turns out to be preferable when selecting an algorithm later on in this project.
 
 ### Class distributions
+\label{1.2.3}
 
 Now that we know about the variations and outliers in our data, it is time to look at it's distribution. At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.\
 For every one of our variables we'll make one of these bar plots. We can use these to look for two features in particular. First we can quickly glance at the bar plots for our numeric data and speculate whether they seem to be normally distributed. Secondly we may examine all of the bar plots a little more carefully and look for skewness.
@@ -511,7 +513,7 @@ To start we'll run all of these algorithms with their default settings, using Ze
 \end{tabular} \footnotesize \par}
 \end{table}
 
-The thing to notice in these results is that with both the Accuracy as well as the F-measure metric, we get performances which are statistically significantly worse than ZeroR, our baseline algorithm. Even though the ROC Area looks fine, this result isn't any good. This occurance can be explained by our skewed data from TODO chapter 2.1.3, in particular our skewed class variable. Since 84.8% of our TenYearCHD variable is classified as `no` even ZeroR will get an accuracy of 84.8%, even though this algorithm isn't any good. We will fix this issue with the method we mentioned before; SMOTE. 
+The thing to notice in these results is that with both the Accuracy as well as the F-measure metric, we get performances which are statistically significantly worse than ZeroR, our baseline algorithm. Even though the ROC Area looks fine, this result isn't any good. This occurance can be explained by our skewed data from the chapter on \nameref{1.2.3}, in particular our skewed class variable. Since 84.8% of our TenYearCHD variable is classified as `no` even ZeroR will get an accuracy of 84.8%, even though this algorithm isn't any good. We will fix this issue with the method we mentioned before; SMOTE. 
 
 #### SMOTE
 
