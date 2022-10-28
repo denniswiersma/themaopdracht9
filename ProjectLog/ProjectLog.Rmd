@@ -529,7 +529,7 @@ With this technique we will artificially create extra instances of the `yes` kin
 This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. We can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
 
 \begin{table}[thb]
-\caption{\label{DefaultComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -553,6 +553,31 @@ This means we select the right instances to increase, base new instances on it's
 We now see that ZeroR doesn't perform nearly as well as it did before, and most of the other algorithms are already significantly better. This is a much better result and more accurately reflects what initial results should look like. \
 Now that we have some decent results we can take a look at which algorithms actually perform well. When taking each metric into account we see that both the J48 tree as well as RandomForest perform quite well, but they are not quite perfect. They have a false negative rate of 10% and 13% respectively. Although this is quite a bit lower than most of the other algorithms, it is still quite dubious to use an algorithm which classifies $\frac{1}{10}$ of positive instances as negative.
 
+#### Cost Sensitive Classifier
+
+To remedy the issue of false negatives we can apply a technique called cost sensitive classification. This classifier allows one to apply a custom amount of cost to values in the confusion matrix. In our case false negatives are a great sin, so we'll try doubling its cost two as compared to false positive values. We can do this in Weka again, by wrapping all our algorithm choices in a cost sensitive classifier: Instead of immediately choosing an algorithm we'll go `meta > CostSensitiveClassifier` and then enter an algorithm of choi e at the `classifier` option. We can then proceed to enter our 2x2 `costMatrix` and set `minimizeExpectedCost` to `True`. After doing this for each algorithm we get the following results.
+
+\begin{table}[thb]
+\caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
+\hline
+\textbf{Algorithm} & \textit{ZeroR} & \textit{OneR} & & \textit{J48} & & \textit{RandomForest} & & \textit{IBk} & & \textit{NaiveBayes} & & \textit{SimpleLogistic} & & \textit{SMO} & \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.03 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 &         & 0.00 &        \\
+\hline
+\textbf{Accuracy} & 50.36 & 87.90 & $\circ$ & 85.73 & $\circ$ & 82.11 & $\circ$ & 77.16 & $\circ$ & 61.80 & $\circ$ & 61.94 & $\circ$ & 67.22 & $\circ$\\
+\hline
+\textbf{False Negative Rate} & 0.00 & 0.00 &         & 0.10 & $\circ$ & 0.03 & $\circ$ & 0.30 & $\circ$ & 0.15 & $\circ$ & 0.12 & $\circ$ & 0.36 & $\circ$\\
+\hline
+\textbf{F-measure} & 0.67 & 0.89 & $\circ$ & 0.86 & $\circ$ & 0.85 & $\circ$ & 0.75 & $\circ$ & 0.69 & $\circ$ & 0.70 & $\circ$ & 0.66 &        \\
+\hline
+\textbf{ROC Area} & 0.50 & 0.88 & $\circ$ & 0.86 & $\circ$ & 0.82 & $\circ$ & 0.77 & $\circ$ & 0.62 & $\circ$ & 0.62 & $\circ$ & 0.67 & $\circ$\\
+\hline
+\multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
 
 ### Algorithm optimisation
 
