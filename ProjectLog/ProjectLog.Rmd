@@ -550,9 +550,9 @@ This means we select the right instances to increase, base new instances on it's
 \end{tabular} \footnotesize \par}
 \end{table}
 
-We now see that ZeroR doesn't perform nearly as well as it did before, and most of the other algorithms are already significantly better. This is a much better result and more accurately reflects what initial results should look like.
+We now see that ZeroR doesn't perform nearly as well as it did before, and most of the other algorithms are already significantly better. This is a much better result and more accurately reflects what initial results should look like. \
+Now that we have some decent results we can take a look at which algorithms actually perform well. When taking each metric into account we see that both the J48 tree as well as RandomForest perform quite well, but they are not quite perfect. They have a false negative rate of 10% and 13% respectively. Although this is quite a bit lower than most of the other algorithms, it is still quite dubious to use an algorithm which classifies $\frac{1}{10}$ of positive instances as negative.
 
-\newpage
 
 ### Algorithm optimisation
 
