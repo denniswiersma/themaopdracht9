@@ -526,7 +526,8 @@ With this technique we will artificially create extra instances of the `yes` kin
 `classValue` = 0 \
 `nearestNeighbors` = 5 \
 `percentage` = 450 \
-This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. We can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
+This means we select the right instances to increase, base new instances on it's 5 nearest neighbors, and increase the number of instances by 450% therefore balancing the `yes` and `no` labels. \
+We have now added enough synthetic instances to balance our classes, but SMOTE introduces a new problem. When creating new instances it will produce values with a tremendous amount of decimal places. If we were to just use these new values as is, we'd get a huge bias towards these synthetic instances, in the process probably turning OneR into the most ideal algorithm. To remedy this we will round the values in our new post-SMOTE dataset to the same number of decimals as the pre-SMOTE dataset. To do this we will apply another filter: `filters > unsupervised > attribute > NumericCleaner`, which we will apply using default settings except for the `decimals` parameter. We will set this to whichever number of decimals the attribute initially had. Once we have done this we can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
 
 \begin{table}[thb]
 \caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
@@ -536,26 +537,26 @@ This means we select the right instances to increase, base new instances on it's
 \textbf{Algorithm} & \textit{ZeroR} & \textit{OneR} & & \textit{J48} & & \textit{RandomForest} & & \textit{IBk} & & \textit{NaiveBayes} & & \textit{SimpleLogistic} & & \textit{SMO} & \\
 \hline
 \hline
-\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.02 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$ & 0.00 & $\circ$\\
+\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.03 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 &         & 0.00 &        \\
 \hline
-\textbf{Accuracy} & 50.36 & 87.90 & $\circ$ & 85.61 & $\circ$ & 86.63 & $\circ$ & 77.16 & $\circ$ & 62.38 & $\circ$ & 67.33 & $\circ$ & 67.22 & $\circ$\\
+\textbf{Accuracy} & 50.36 & 80.28 & $\circ$ & 74.83 & $\circ$ & 84.23 & $\circ$ & 77.06 & $\circ$ & 62.33 & $\circ$ & 67.36 & $\circ$ & 67.17 & $\circ$\\
 \hline
-\textbf{False Negative Rate} & 0.00 & 0.00 &         & 0.10 & $\circ$ & 0.13 & $\circ$ & 0.30 & $\circ$ & 0.22 & $\circ$ & 0.33 & $\circ$ & 0.36 & $\circ$\\
+\textbf{False Negative Rate} & 0.00 & 0.09 & $\circ$ & 0.26 & $\circ$ & 0.17 & $\circ$ & 0.31 & $\circ$ & 0.22 & $\circ$ & 0.33 & $\circ$ & 0.36 & $\circ$\\
 \hline
-\textbf{F-measure} & 0.67 & 0.89 & $\circ$ & 0.86 & $\circ$ & 0.87 & $\circ$ & 0.75 & $\circ$ & 0.67 &         & 0.67 &         & 0.66 &        \\
+\textbf{F-measure} & 0.67 & 0.82 & $\circ$ & 0.75 & $\circ$ & 0.84 & $\circ$ & 0.75 & $\circ$ & 0.67 &         & 0.67 &         & 0.66 &        \\
 \hline
-\textbf{ROC Area} & 0.50 & 0.88 & $\circ$ & 0.88 & $\circ$ & 0.94 & $\circ$ & 0.77 & $\circ$ & 0.70 & $\circ$ & 0.73 & $\circ$ & 0.67 & $\circ$\\
+\textbf{ROC Area} & 0.50 & 0.80 & $\circ$ & 0.77 & $\circ$ & 0.92 & $\circ$ & 0.77 & $\circ$ & 0.70 & $\circ$ & 0.73 & $\circ$ & 0.67 & $\circ$\\
 \hline
 \multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
 \end{tabular} \footnotesize \par}
 \end{table}
 
 We now see that ZeroR doesn't perform nearly as well as it did before, and most of the other algorithms are already significantly better. This is a much better result and more accurately reflects what initial results should look like. \
-Now that we have some decent results we can take a look at which algorithms actually perform well. When taking each metric into account we see that both the J48 tree as well as RandomForest perform quite well, but they are not quite perfect. They have a false negative rate of 10% and 13% respectively. Although this is quite a bit lower than most of the other algorithms, it is still quite dubious to use an algorithm which classifies $\frac{1}{10}$ of positive instances as negative.
+Now that we have some decent results we can take a look at which algorithms actually perform well. When taking each metric into account we see that both the J48 tree as well as RandomForest perform quite well, but they are not quite perfect. They have a false negative rate of 11% and 13% respectively. Although this is quite a bit lower than most of the other algorithms, it is still quite dubious to use an algorithm which classifies $\frac{1}{10}$ of positive instances as negative.
 
 #### Cost Sensitive Classifier
 
-To remedy the issue of false negatives we can apply a technique called cost sensitive classification. This classifier allows one to apply a custom amount of cost to values in the confusion matrix. In our case false negatives are a great sin, so we'll try doubling its cost two as compared to false positive values. We can do this in Weka again, by wrapping all our algorithm choices in a cost sensitive classifier: Instead of immediately choosing an algorithm we'll go `meta > CostSensitiveClassifier` and then enter an algorithm of choi e at the `classifier` option. We can then proceed to enter our 2x2 `costMatrix` and set `minimizeExpectedCost` to `True`. After doing this for each algorithm we get the following results.
+To remedy the issue of false negatives we can apply a technique called cost sensitive classification. This classifier allows one to apply a custom amount of cost to values in the confusion matrix. In our case false negatives are a great sin, so we'll try doubling its cost two as compared to false positive values. We can do this in Weka again, by wrapping all our algorithm choices in a cost sensitive classifier: Instead of immediately choosing an algorithm we'll go `meta > CostSensitiveClassifier` and then enter an algorithm of choice at the `classifier` option. We can then proceed to enter our 2x2 `costMatrix` and set `minimizeExpectedCost` to `True`. After doing this for each algorithm we get the following results.
 
 \begin{table}[thb]
 \caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
@@ -567,13 +568,13 @@ To remedy the issue of false negatives we can apply a technique called cost sens
 \hline
 \textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.03 & $\circ$ & 0.12 & $\circ$ & 0.00 & $\circ$ & 0.00 &         & 0.00 &        \\
 \hline
-\textbf{Accuracy} & 50.36 & 87.90 & $\circ$ & 85.73 & $\circ$ & 82.11 & $\circ$ & 77.16 & $\circ$ & 61.80 & $\circ$ & 61.94 & $\circ$ & 67.22 & $\circ$\\
+\textbf{Accuracy} & 50.36 & 80.28 & $\circ$ & 74.65 & $\circ$ & 80.29 & $\circ$ & 77.06 & $\circ$ & 61.80 & $\circ$ & 61.95 & $\circ$ & 67.17 & $\circ$\\
 \hline
-\textbf{False Negative Rate} & 0.00 & 0.00 &         & 0.10 & $\circ$ & 0.03 & $\circ$ & 0.30 & $\circ$ & 0.15 & $\circ$ & 0.12 & $\circ$ & 0.36 & $\circ$\\
+\textbf{False Negative Rate} & 0.00 & 0.09 & $\circ$ & 0.23 & $\circ$ & 0.04 & $\circ$ & 0.31 & $\circ$ & 0.15 & $\circ$ & 0.12 & $\circ$ & 0.36 & $\circ$\\
 \hline
-\textbf{F-measure} & 0.67 & 0.89 & $\circ$ & 0.86 & $\circ$ & 0.85 & $\circ$ & 0.75 & $\circ$ & 0.69 & $\circ$ & 0.70 & $\circ$ & 0.66 &        \\
+\textbf{F-measure} & 0.67 & 0.82 & $\circ$ & 0.75 & $\circ$ & 0.83 & $\circ$ & 0.75 & $\circ$ & 0.69 & $\circ$ & 0.70 & $\circ$ & 0.66 &        \\
 \hline
-\textbf{ROC Area} & 0.50 & 0.88 & $\circ$ & 0.86 & $\circ$ & 0.82 & $\circ$ & 0.77 & $\circ$ & 0.62 & $\circ$ & 0.62 & $\circ$ & 0.67 & $\circ$\\
+\textbf{ROC Area} & 0.50 & 0.80 & $\circ$ & 0.75 & $\circ$ & 0.80 & $\circ$ & 0.77 & $\circ$ & 0.62 & $\circ$ & 0.62 & $\circ$ & 0.67 & $\circ$\\
 \hline
 \multicolumn{16}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
 \end{tabular} \footnotesize \par}
