@@ -584,6 +584,43 @@ In these results we can see that some of our best performing algorithms, includi
 
 ### Algorithm optimisation
 
+Now that we have found our best performing algorithms, we can continue on to optimising their settings as much as possible. To do this we'll once again use the Weka experimenter. In contrast to the last chapter we will stop using ZeroR as a baseline at this point. Instead we'll be using the default settings setup of each algorithm as a baseline for optimising that particular algorithm. 
+
+#### OneR
+
+For our convenience OneR only has a single setting that really interests us, which is its minimum bucket size.
+
+##### Minimal bucket size
+
+In Weka the default value for this setting is six which we will therefore use as a baseline in this analysis. Since we have a fairly large dataset we can afford to increase this value dramatically as we do not want to end up with a nonsensical model. When OneR selects its preferred attribute it will start to classify instances based on that attribute. When the bucket size is too low it might create some weird models. For example: \
+Let's say OneR picked, for instance, age as the attribute it wants to use. When the bucket size is too low it might classify an instance with an age of 38 as `yes`, an instance with an age of 39 as `no`, and an instance with an age of 40 as `yes` again. This is a bit odd, and to prevent this we will increase the bucket size. \
+
+\begin{table}[thb]
+\caption{\label{OneRBucketSize}Comparison of ZeroR using varying bucket sizes and a cost sensitive classification, based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR's default settings as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
+\hline
+\textbf{OneR setting} & \textit{-B 6} & \textit{-B 25} & & \textit{-B 50} & & \textit{-B 100} & & \textit{-B 200} &  \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.00 & 0.00 &         & 0.00 &         & 0.00 &         & 0.00 &        \\
+\hline
+\textbf{Accuracy} & 80.28 & 74.19 & $\bullet$ & 64.39 & $\bullet$ & 64.89 & $\bullet$ & 64.90 & $\bullet$\\
+\hline
+\textbf{False Negative Rate} & 0.09 & 0.23 & $\circ$ & 0.43 & $\circ$ & 0.47 & $\circ$ & 0.46 & $\circ$\\
+\hline
+\textbf{F-measure} & 0.82 & 0.75 & $\bullet$ & 0.62 & $\bullet$ & 0.61 & $\bullet$ & 0.61 & $\bullet$\\
+\hline
+\textbf{ROC Area} & 0.80 & 0.74 & $\bullet$ & 0.64 & $\bullet$ & 0.65 & $\bullet$ & 0.65 & $\bullet$\\
+\hline
+\multicolumn{10}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+Unsurprisingly, as we make our model more sane by increasing the bucket size, the model's performance drops significantly in every single measure, except of course for elapsed time. This is a very clear indication that OneR is probably not the algorithm we'd like to continue on with. Luckily we spread our eggs over two baskets, so let us now take a look at the Random Forest.
+
+#### RandomForest
+
 ### Meta-learners
 
 ## Java wrapper
