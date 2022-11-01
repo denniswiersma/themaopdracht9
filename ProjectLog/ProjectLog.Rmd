@@ -497,7 +497,7 @@ To start we'll run all of these algorithms with their default settings, using Ze
 
 
 \begin{table}[thb]
-\caption{\label{DefaultComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area, using ZeroR as a baseline.}
+\caption{\label{DefaultComparison}Comparison of ML algorithms using default settings using ZeroR as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -530,7 +530,7 @@ This means we select the right instances to increase, base new instances on it's
 We have now added enough synthetic instances to balance our classes, but SMOTE introduces a new problem. When creating new instances it will produce values with a tremendous amount of decimal places. If we were to just use these new values as is, we'd get a huge bias towards these synthetic instances, in the process probably turning OneR into the most ideal algorithm. To remedy this we will round the values in our new post-SMOTE dataset to the same number of decimals as the pre-SMOTE dataset. To do this we will apply another filter: `filters > unsupervised > attribute > NumericCleaner`, which we will apply using default settings except for the `decimals` parameter. We will set this to whichever number of decimals the attribute initially had. Once we have done this we can then save this dataset and return to the Weka experimenter. After completing all these steps we get the following results:
 
 \begin{table}[thb]
-\caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings after performing SMOTE on the dataset, using ZeroR as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -559,7 +559,7 @@ Now that we have some decent results we can take a look at which algorithms actu
 To remedy the issue of false negatives we can apply a technique called cost sensitive classification. This classifier allows one to apply a custom amount of cost to values in the confusion matrix. In our case false negatives are a great sin, so we'll try doubling its cost two as compared to false positive values' cost of one. We can do this in Weka by wrapping all our algorithm choices in a cost sensitive classifier: Instead of immediately choosing an algorithm we'll go `meta > CostSensitiveClassifier` and then enter an algorithm of choice at the `classifier` option. We can then proceed to enter our 2x2 `costMatrix` and set `minimizeExpectedCost` to `True`. After doing this for each algorithm we get the following results.
 
 \begin{table}[thb]
-\caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification after performing SMOTE on the dataset, using ZeroR as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -596,7 +596,7 @@ In Weka the default value for this setting is six which we will therefore use as
 Let's say OneR picked, for instance, age as the attribute it wants to use. When the bucket size is too low it might classify an instance with an age of 38 as `yes`, an instance with an age of 39 as `no`, and an instance with an age of 40 as `yes` again. This is a bit odd, and to prevent this we will increase the bucket size. \
 
 \begin{table}[thb]
-\caption{\label{OneRBucketSize}Comparison of ZeroR using varying bucket sizes and a cost sensitive classification, based on elapsed testing time, accuracy, False Negative Rate, F-measure, and ROC Area after performing SMOTE on the dataset, using ZeroR's default settings as a baseline.}
+\caption{\label{OneRBucketSize}Comparison of ZeroR using varying bucket sizes and cost sensitive classification after performing SMOTE on the dataset, using ZeroR's default settings as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
