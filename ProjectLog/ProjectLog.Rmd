@@ -652,4 +652,10 @@ Although we do see some changes in our accuracy values, none of them are statist
 
 ### Meta-learners
 
+We now have the most optimal options for an algorithm. We can however still try too improve this algorithm by using so called meta-learners. These meta algorithms take an existing base algorithm and add something extra on top. In this chapter we will explore both bagging as well as boosting.
+
+#### Bagging
+
+#### Boosting
+
 ## Java wrapper
