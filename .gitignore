@@ -6,6 +6,19 @@
 .Rproj
 /themaopdracht9.Rproj
 
+# Java files
+.gradle
+/build/
+/.idea
+/gradle
+gradlew
+gradlew.bat
+CLIdemo.iml
+
+*.class
+*.log
+*.jar
+
 # MacOS files
 .DS_Store
 
