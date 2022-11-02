@@ -656,6 +656,34 @@ We now have the most optimal options for an algorithm. We can however still try 
 
 #### Bagging
 
+Bagging is a meta-learner, or ensemble learning, is a technique where we sample the original dataset to create sets of the same size. We then build a model (in this case based on our RandomForest) for each of these sets. The outcomes for each prediction are then aggregated into a single prediction by, in this case, voting. This method helps to decrease variance, while increasing accuracy.
+We will perform this technique with four different numbers of iterations and compare it to a baseline without bagging.
+
+\begin{table}[thb]
+\caption{\label{RandomForestIterations}Comparison of bagging with RandomForests using a varying number of bagging iterations and cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without bagging as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
+\hline
+\textbf{Bagging setting} & \textit{no bagging} & \textit{-I 10} & & \textit{-I 25} & & \textit{-I 40} & & \textit{-I 55} &  \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.03 & 0.43 & $\circ$ & 11.06 &         & 2.42 & $\circ$ & 4.91 &        \\
+\hline
+\textbf{Accuracy} & 80.29 & 78.37 & $\bullet$ & 79.28 & $\bullet$ & 79.19 & $\bullet$ & 79.37 & $\bullet$\\
+\hline
+\textbf{False Negative Rate} & 0.04 & 0.04 & $\bullet$ & 0.04 &         & 0.04 &         & 0.04 &        \\
+\hline
+\textbf{F-measure} & 0.83 & 0.82 & $\bullet$ & 0.82 & $\bullet$ & 0.82 & $\bullet$ & 0.82 & $\bullet$\\
+\hline
+\textbf{ROC Area} & 0.80 & 0.88 & $\circ$ & 0.89 & $\circ$ & 0.90 & $\circ$ & 0.90 & $\circ$\\
+\hline
+\multicolumn{10}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+This analysis has led us to some very interesting results. While the accuracy has taken a small, but statistically significant, hit across the board, ROC Area shows some major improvements. Elapsed time testing has seen some significant increases, with the value for twenty-five bagging iterations being particularly odd. While some other measures show statistically significant differences, they do stay fairly similar. 
+In the interest of keeping model training times at a reasonable level, while also squeezing out the maximum amount of performance, the model created with twenty-five iterations seems to be the best this analysis has to offer.
+
 #### Boosting
 
 ## Java wrapper
