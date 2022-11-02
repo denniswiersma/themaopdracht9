@@ -28,10 +28,33 @@ The source for this data mentioned on the Kaggle page links to another page on K
 
 ```bash
 themaopdracht9
-├── ExploratoryDataAnalysis
-│   └── ExploratoryDataAnalysis.Rmd
+├── ProjectLog
+│   ├── ProjectLog.Rmd
+│   ├── ProjectLog.log
+│   ├── ProjectLog.pdf
 ├── data
-│   └── framingham.csv
+│   ├── SMOTEprocessedData.arff
+│   ├── framingham.csv
+│   ├── processedData.arff
+│   ├── processedData.csv
+│   └── roundedSMOTEprocessedData.arff
+├── experiments
+│   ├── RandomForestBagging.exp
+│   ├── RandomForestOptimiseIterations.exp
+│   ├── SMOTEcostSensitivedefaultSettings.exp
+│   ├── SMOTEdefaultSettings.exp
+│   ├── ZeroROptimiseBucketSize.exp
+│   ├── defaultSettings.exp
+│   └── results
+│       ├── RandomForestOptimiseIterationsResult.arff
+│       ├── SMOTEcostSensitivedefaultSettingsResult.arff
+│       ├── SMOTEdefaultSettingsResult.arff
+│       ├── ZeroROptimiseBucketSizeResult.arff
+│       └── defaultSettingsResult.arff
+├── report
+│   ├── report.Rmd
+│   └── report.pdf
+├── .gitignore
 ├── CodeBook.txt
 ├── LICENSE
 └── README.md
