@@ -621,6 +621,35 @@ Unsurprisingly, as we make our model more sane by increasing the bucket size, th
 
 #### RandomForest
 
+This algorithm has a bunch more settings than OneR, as it is a bit more complicated. There is however only one setting that we are really interested in here, which is `numIterations`.
+
+##### Number of iterations
+The number of iterations we use when producing our forest represents the number of trees in our forest. Theoretically we should get a better result with more iterations since producing more trees increases the chance we'll find a better one.
+
+\begin{table}[thb]
+\caption{\label{RandomForestIterations}Comparison of RandomForest using a varying number of iterations and cost sensitive classification after performing SMOTE on the dataset, using RandomForest's default settings as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
+\hline
+\textbf{RandomForest setting} & \textit{-I 100} & \textit{-I 250} & & \textit{-I 500} & & \textit{-I 750} & & \textit{-I 1000} &  \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.03 & 0.14 & $\circ$ & 0.36 & $\circ$ & 8.17 &         & 0.89 & $\circ$\\
+\hline
+\textbf{Accuracy} & 80.29 & 80.51 &         & 80.53 &         & 80.51 &         & 80.55 &        \\
+\hline
+\textbf{False Negative Rate} & 0.04 & 0.04 &         & 0.04 &         & 0.04 &         & 0.04 &        \\
+\hline
+\textbf{F-measure} & 0.83 & 0.83 &         & 0.83 &         & 0.83 &         & 0.83 &        \\
+\hline
+\textbf{ROC Area} & 0.80 & 0.80 &         & 0.80 &         & 0.80 &         & 0.80 &        \\
+\hline
+\multicolumn{10}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+Although we do see some changes in our accuracy values, none of them are statistically significant. We do however see significant changes in our elapsed time testing, but these increases are actually a negative consequence. All this means that we can stick with a Random Forest doing 100 iterations.
+
 ### Meta-learners
 
 ## Java wrapper
