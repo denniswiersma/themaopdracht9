@@ -20,7 +20,7 @@ CLIdemo.iml
 *.jar
 
 # IDE files
-.idea/*
+javaWrapper/.idea/*
 
 # MacOS files
 .DS_Store
