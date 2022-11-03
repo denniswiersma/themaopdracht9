@@ -596,7 +596,7 @@ In Weka the default value for this setting is six which we will therefore use as
 Let's say OneR picked, for instance, age as the attribute it wants to use. When the bucket size is too low it might classify an instance with an age of 38 as `yes`, an instance with an age of 39 as `no`, and an instance with an age of 40 as `yes` again. This is a bit odd, and to prevent this we will increase the bucket size. \
 
 \begin{table}[thb]
-\caption{\label{OneRBucketSize}Comparison of ZeroR using varying bucket sizes and cost sensitive classification after performing SMOTE on the dataset, using ZeroR's default settings as a baseline.}
+\caption{\label{OneRBucketSize}Comparison of ZeroR using varying bucket sizes while using cost sensitive classification after performing SMOTE on the dataset, using ZeroR's default settings as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -627,7 +627,7 @@ This algorithm has a bunch more settings than OneR, as it is a bit more complica
 The number of iterations we use when producing our forest represents the number of trees in our forest. Theoretically we should get a better result with more iterations since producing more trees increases the chance we'll find a better one.
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of RandomForest using a varying number of iterations and cost sensitive classification after performing SMOTE on the dataset, using RandomForest's default settings as a baseline.}
+\caption{\label{RandomForestIterations}Comparison of RandomForest using a varying number of iterations while using cost sensitive classification after performing SMOTE on the dataset, using RandomForest's default settings as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -660,7 +660,7 @@ Bagging is a meta-learner, or ensemble learning, is a technique where we sample 
 We will perform this technique with four different numbers of iterations and compare it to a baseline without bagging.
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of bagging with RandomForests using a varying number of bagging iterations and cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without bagging as a baseline.}
+\caption{\label{RandomForestIterations}Comparison of bagging with RandomForests using a varying number of bagging iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without bagging as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -685,5 +685,32 @@ This analysis has led us to some very interesting results. While the accuracy ha
 In the interest of keeping model training times at a reasonable level, while also squeezing out the maximum amount of performance, the model created with twenty-five iterations seems to be the best this analysis has to offer.
 
 #### Boosting
+
+Boosting is another ensemble learner which builds multiple models. This is an iterative technique which builds new models based on the performance of the previously built models. It does this by assigning extra weight to instances which were misclassified before. This encourages the new model to become a so called expert at instances that were misclassified by earlier models. This algorithm is known in Weka as `AdaBoostM1`. We will once again perform this technique with four different numbers of iterations and compare it to a baseline without boosting.
+
+\begin{table}[thb]
+\caption{\label{RandomForestIterations}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
+\hline
+\textbf{Boost setting} & \textit{no boost} & \textit{-I 10} & & \textit{-I 25} & & \textit{-I 40} & & \textit{-I 55} &  \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 0.03 & 0.42 & $\circ$ & 1.25 & $\circ$ & 2.49 & $\circ$ & 3.65 & $\circ$\\
+\hline
+\textbf{Accuracy} & 80.29 & 85.25 & $\circ$ & 88.02 & $\circ$ & 88.84 & $\circ$ & 89.28 & $\circ$\\
+\hline
+\textbf{False Negative Rate} & 0.04 & 0.05 & $\circ$ & 0.06 & $\circ$ & 0.06 & $\circ$ & 0.06 & $\circ$\\
+\hline
+\textbf{F-measure} & 0.83 & 0.87 & $\circ$ & 0.89 & $\circ$ & 0.89 & $\circ$ & 0.90 & $\circ$\\
+\hline
+\textbf{ROC Area} & 0.80 & 0.94 & $\circ$ & 0.94 & $\circ$ & 0.93 & $\circ$ & 0.93 & $\circ$\\
+\hline
+\multicolumn{10}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+Boosting seems to have led us to a treasure trove! We see statistically significant increases across the board. This is unfortunately at the cost of a false negative rate which is two percentage points higher. One could however argue that this is a sacrifice worth making since we do get significantly higher values for accuracy, ROC area, and even F-measure. Although training the algorithms with 55 boosting iterations takes some time, it seems to be well worth the cost.
+
 
 ## Java wrapper
