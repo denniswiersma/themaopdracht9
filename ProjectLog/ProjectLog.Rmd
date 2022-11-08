@@ -720,7 +720,7 @@ At this point we have a pretty good model which is great! There's always more we
 Since our accuracy score and ROC Area are looking pretty strong we can examine whether it's worth it to increase the cost for false negatives in our `CostSensitiveClassifier` just a bit more. We'll use our best model thus far but we will up the false negative cost from 2 to 2.5. This leaves us with the following results:
 
 \begin{table}[thb]
-\caption{\label{RedoCostMatrix}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{RedoCostMatrix}Comparison of RandomForests with boosting while using cost sensitive classification with a FN cost of 2.5 after performing SMOTE on the dataset, using a FN cost of 2 as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}c} \\
 \hline
@@ -748,7 +748,7 @@ We see two important changes: a slight decrease in accuracy which is not statist
 As a last attempt to improve our model we will try an attribute selector. This will only keep around the attributes it thinks are actually useful when building and testing our model. We will make use of Weka's `AttributeSelectedClassifier` for this where the evaluator is `CfsSubsetEval` and search is `ExhaustiveSearch`. This presents us with the foloowing results:
 
 \begin{table}[thb]
-\caption{\label{AttributeSelector}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{AttributeSelector}Comparison of attribute selection with RandomForests while using boosting and cost sensitive classification after performing SMOTE on the dataset, using no attribute selector as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}c} \\
 \hline
