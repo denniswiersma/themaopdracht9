@@ -660,7 +660,7 @@ Bagging is a meta-learner, or ensemble learning, is a technique where we sample 
 We will perform this technique with four different numbers of iterations and compare it to a baseline without bagging.
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of bagging with RandomForests using a varying number of bagging iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without bagging as a baseline.}
+\caption{\label{BaggingComp}Comparison of bagging with RandomForests using a varying number of bagging iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without bagging as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -689,7 +689,7 @@ In the interest of keeping model training times at a reasonable level, while als
 Boosting is another ensemble learner which builds multiple models. This is an iterative technique which builds new models based on the performance of the previously built models. It does this by assigning extra weight to instances which were misclassified before. This encourages the new model to become a so called expert at instances that were misclassified by earlier models. This algorithm is known in Weka as `AdaBoostM1`. We will once again perform this technique with four different numbers of iterations and compare it to a baseline without boosting.
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{BoostingComp}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -720,7 +720,7 @@ At this point we have a pretty good model which is great! There's always more we
 Since our accuracy score and ROC Area are looking pretty strong we can examine whether it's worth it to increase the cost for false negatives in our `CostSensitiveClassifier` just a bit more. We'll use our best model thus far but we will up the false negative cost from 2 to 2.5. This leaves us with the following results:
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{RedoCostMatrix}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}c} \\
 \hline
@@ -748,7 +748,7 @@ We see two important changes: a slight decrease in accuracy which is not statist
 As a last attempt to improve our model we will try an attribute selector. This will only keep around the attributes it thinks are actually useful when building and testing our model. We will make use of Weka's `AttributeSelectedClassifier` for this where the evaluator is `CfsSubsetEval` and search is `ExhaustiveSearch`. This presents us with the foloowing results:
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{AttributeSelector}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
 \footnotesize
 {\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}c} \\
 \hline
@@ -777,7 +777,7 @@ We have finally reached the last stop in our machine learning model building adv
 When entering our model settings into Weka we start off with `AdaBoostM1` for which we set `numIterations` to 55. We'll then want to choose a classifier and for that we will use the `CostSensitiveClassifier`. For this will resize the `costMatrix` to 2x2, set the cost of false negatives to 2.5, and set `minimizeExpectedCost` to True. Last but not least we pass a classifier to this algorithm as well, and choose the RandomForest which we will use with just the `numExecutionSlots` parameter set to 8 for full CPU utilisation. This leaves us with a final model which performs as follows:
 
 \begin{table}[thb]
-\caption{\label{RandomForestIterations}Final model which utilises boosting with RandomForests while using cost sensitive classification after performing SMOTE on the dataset.}
+\caption{\label{FinalModel}Final model which utilises boosting with RandomForests while using cost sensitive classification after performing SMOTE on the dataset.}
 \footnotesize
 {\centering \begin{tabular}{l||rr@{\hspace{0.1cm}}c} \\
 \hline
