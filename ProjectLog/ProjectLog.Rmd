@@ -743,5 +743,32 @@ Since our accuracy score and ROC Area are looking pretty strong we can examine w
 
 We see two important changes: a slight decrease in accuracy which is not statistically significant, and a one percentage point decrease in our false negative rate which is statistically significant. We will therefore want to keep this small, but useful, change around.
 
+#### Attribute selection
+
+As a last attempt to improve our model we will try an attribute selector. This will only keep around the attributes it thinks are actually useful when building and testing our model. We will make use of Weka's `AttributeSelectedClassifier` for this where the evaluator is `CfsSubsetEval` and search is `ExhaustiveSearch`. This presents us with the foloowing results:
+
+\begin{table}[thb]
+\caption{\label{RandomForestIterations}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\footnotesize
+{\centering \begin{tabular}{lr||r@{\hspace{0.1cm}}c} \\
+\hline
+\textbf{Attribute selector} & \textit{No selector} & \textit{Selector} &   \\
+\hline
+\hline
+\textbf{Elapsed time testing} & 4.49 & 4.76 &        \\
+\hline
+\textbf{Accuracy} & 88.88 & 77.73 & $\bullet$\\
+\hline
+\textbf{False Negative Rate} & 0.05 & 0.13 & $\circ$\\
+\hline
+\textbf{F-measure} & 0.90 & 0.80 & $\bullet$\\
+\hline
+\textbf{ROC Area} & 0.93 & 0.82 & $\bullet$\\
+\hline
+\multicolumn{4}{c}{$\circ$, $\bullet$ statistically significant increase or decrease}\\
+\end{tabular} \footnotesize \par}
+\end{table}
+
+This approach has worsened our results significantly. Metrics dropped across the board, making this method not worthwhile to pursue.
 
 ## Java wrapper
