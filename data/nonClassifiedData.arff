@@ -1,0 +1,28 @@
+@relation 'R_data_frame-weka.filters.supervised.instance.SMOTE-C0-K5-P450.0-S1-weka.filters.unsupervised.attribute.NumericCleaner-min-1.7976931348623157E308-min-default-1.7976931348623157E308-max1.7976931348623157E308-max-default1.7976931348623157E308-closeto0.0-closeto-default0.0-closeto-tolerance1.0E-6-R2,4,9,11,13,14-decimals0-weka.filters.unsupervised.attribute.NumericCleaner-min-1.7976931348623157E308-min-default-1.7976931348623157E308-max1.7976931348623157E308-max-default1.7976931348623157E308-closeto0.0-closeto-default0.0-closeto-tolerance1.0E-6-R10-decimals1-weka.filters.unsupervised.attribute.NumericCleaner-min-1.7976931348623157E308-min-default-1.7976931348623157E308-max1.7976931348623157E308-max-default1.7976931348623157E308-closeto0.0-closeto-default0.0-closeto-tolerance1.0E-6-R12-decimals2-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.instance.RemovePercentage-P90.0'
+
+@attribute male {female,male}
+@attribute age numeric
+@attribute currentSmoker {no,yes}
+@attribute cigsPerDay numeric
+@attribute BPMeds {no,yes}
+@attribute prevalentStroke {no,yes}
+@attribute prevalentHyp {no,yes}
+@attribute diabetes {no,yes}
+@attribute totChol numeric
+@attribute sysBP numeric
+@attribute diaBP numeric
+@attribute BMI numeric
+@attribute heartRate numeric
+@attribute glucose numeric
+@attribute TenYearCHD {no,yes}
+
+@data
+female,43,yes,13,no,no,no,no,233,97.9,72,21.35,79,80,?
+female,48,yes,10,no,no,no,no,231,97.6,69,18.84,79,78,?
+female,46,yes,14,no,no,no,no,230,100,72,20.83,73,80,?
+male,55,yes,30,no,no,yes,no,175,159.6,96,22.96,60,86,?
+male,54,yes,30,no,no,yes,no,176,156.3,88,22.96,64,86,?
+male,52,yes,34,no,no,yes,no,189,145.2,90,24.95,54,78,?
+male,46,yes,31,no,no,yes,no,179,148.6,89,25.8,52,78,?
+male,55,yes,30,no,no,yes,no,179,147.1,92,23.36,56,71,?
+female,46,yes,30,no,no,no,no,194,141.9,88,22.37,97,71,?
