@@ -17,18 +17,25 @@ import weka.core.converters.ConverterUtils.DataSource;
 class WekaReader {
     // final String modelFile = "j48.model";
     // final String unknownFile = "unknown_weather.arff";
-    final String modelFile = "./models/breast-cancer-demo.model";
-    final String unknownFile = "./data/unknown-breastcancer.arff";
+
 
     public static void main(String[] args) throws Exception {
         // STEP 2: load a model and use it
         new WekaReader().start();
     }
 
-    private void start() throws Exception {
-        AbstractClassifier fromFile = loadClassifier();
-        Instances unknownInstances = loadArff(unknownFile);
-        classifyNewInstance(fromFile, unknownInstances);
+    private void start(String[] args) {
+        String dataFile = args[0];
+        System.out.println("Data File loaded:" + dataFile);
+        try {
+            AbstractClassifier fromFile = loadClassifier();
+            Instances unknownInstances = loadArff(dataFile);
+            unknownInstances.setClassIndex(1);
+            classifyNewInstance(fromFile, unknownInstances);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -44,12 +51,12 @@ class WekaReader {
     }
 
 
-    private Classifier loadClassifier() throws Exception {
+    private AbstractClassifier loadClassifier() throws Exception {
         // deserialize model
         String modelFile = "/BoostedCostSensitiveRandomForest.model";
         try {
             InputStream in = getClass().getResourceAsStream(modelFile);
-            return (Classifier) SerializationHelper.read(in);
+            return (AbstractClassifier) SerializationHelper.read(in);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
