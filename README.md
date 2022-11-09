@@ -28,34 +28,52 @@ The source for this data mentioned on the Kaggle page links to another page on K
 
 ```bash
 themaopdracht9
-├── ProjectLog
-│   ├── ProjectLog.Rmd
-│   ├── ProjectLog.log
-│   ├── ProjectLog.pdf
-├── data
-│   ├── SMOTEprocessedData.arff
-│   ├── framingham.csv
-│   ├── processedData.arff
-│   ├── processedData.csv
-│   └── roundedSMOTEprocessedData.arff
-├── experiments
-│   ├── RandomForestBagging.exp
-│   ├── RandomForestOptimiseIterations.exp
-│   ├── SMOTEcostSensitivedefaultSettings.exp
-│   ├── SMOTEdefaultSettings.exp
-│   ├── ZeroROptimiseBucketSize.exp
-│   ├── defaultSettings.exp
-│   └── results
-│       ├── RandomForestOptimiseIterationsResult.arff
-│       ├── SMOTEcostSensitivedefaultSettingsResult.arff
-│       ├── SMOTEdefaultSettingsResult.arff
-│       ├── ZeroROptimiseBucketSizeResult.arff
-│       └── defaultSettingsResult.arff
-├── report
-│   ├── report.Rmd
-│   └── report.pdf
+├── javaWrapper
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── wrapper
+│       │   │       ├── Main.java
+│       │   │       └── WekaReader.java
+│       │   └── resources
+│       │       └── BoostedCostSensitiveRandomForest.model
+├── loggingAndReporting
+│   ├── CodeBook.txt
+│   ├── ProjectLog
+│   │   ├── ProjectLog.Rmd
+│   │   ├── ProjectLog.pdf
+│   ├── data
+│   │   ├── BoostedCostSensitiveRandomForest.model
+│   │   ├── SMOTEprocessedData.arff
+│   │   ├── framingham.csv
+│   │   ├── nonClassifiedData.arff
+│   │   ├── processedData.arff
+│   │   ├── processedData.csv
+│   │   └── roundedSMOTEprocessedData.arff
+│   ├── experiments
+│   │   ├── AttributeSelecter.exp
+│   │   ├── RandomForestBagging.exp
+│   │   ├── RandomForestBoosting.exp
+│   │   ├── RandomForestOptimiseIterations.exp
+│   │   ├── RedoCostMatrix.exp
+│   │   ├── SMOTEcostSensitivedefaultSettings.exp
+│   │   ├── SMOTEdefaultSettings.exp
+│   │   ├── ZeroROptimiseBucketSize.exp
+│   │   ├── defaultSettings.exp
+│   │   └── results
+│   │       ├── AttributeSelecterResult.arff
+│   │       ├── RandomForestBaggingResult.arff
+│   │       ├── RandomForestBoostingResult.arff
+│   │       ├── RandomForestOptimiseIterationsResult.arff
+│   │       ├── RedoCostMatrixResult.arff
+│   │       ├── SMOTEcostSensitivedefaultSettingsResult.arff
+│   │       ├── SMOTEdefaultSettingsResult.arff
+│   │       ├── ZeroROptimiseBucketSizeResult.arff
+│   │       └── defaultSettingsResult.arff
+│   └── report
+│       ├── report.Rmd
+│       └── report.pdf
 ├── .gitignore
-├── CodeBook.txt
 ├── LICENSE
 └── README.md
 ```
