@@ -2,12 +2,15 @@ package wrapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import weka.classifiers.AbstractClassifier;
+import weka.classifiers.Classifier;
 import weka.classifiers.meta.AdaBoostM1;
 import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
+import weka.core.SerializationHelper;
 import weka.core.converters.ArffLoader;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -41,9 +44,16 @@ class WekaReader {
     }
 
 
-    private AbstractClassifier loadClassifier() throws Exception {
+    private Classifier loadClassifier() throws Exception {
         // deserialize model
-        return (AbstractClassifier) weka.core.SerializationHelper.read(modelFile);
+        String modelFile = "/BoostedCostSensitiveRandomForest.model";
+        try {
+            InputStream in = getClass().getResourceAsStream(modelFile);
+            return (Classifier) SerializationHelper.read(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private Instances loadArff(String datafile) throws IOException {
