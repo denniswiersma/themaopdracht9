@@ -24,7 +24,7 @@ class WekaReader {
         try {
             AbstractClassifier fromFile = loadClassifier();
             Instances unknownInstances = loadArff(dataFile);
-            unknownInstances.setClassIndex(1);
+            unknownInstances.setClassIndex(unknownInstances.numAttributes() - 1);
             classifyNewInstance(fromFile, unknownInstances);
 
         } catch (Exception e) {
