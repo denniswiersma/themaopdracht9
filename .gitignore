@@ -23,7 +23,7 @@ CLIdemo.iml
 .DS_Store
 
 # Personal files
-/assignment_reproducible_research
+loggingAndReporting/assignment_reproducible_research
 /notes.txt
-/report/report.pdf
-/assignmentModelEveluation
+loggingAndReporting/report/report.pdf
+loggingAndReporting/assignmentModelEveluation
