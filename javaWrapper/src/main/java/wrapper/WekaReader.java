@@ -21,7 +21,7 @@ class WekaReader {
 
     public static void main(String[] args) throws Exception {
         // STEP 2: load a model and use it
-        new WekaReader().start();
+        new WekaReader().start(args);
     }
 
     private void start(String[] args) {
