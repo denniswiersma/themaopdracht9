@@ -43,7 +43,16 @@ As mentioned before, for the training of this ML model a rather large amount of 
 
 \newpage
 
-# Methods
+# Methodology
+## Software
+
+## Data
+### Aquicition
+### Processing
+
+## Machine Learning
+### Performance
+### Interfacing
 \newpage
 
 # Results
