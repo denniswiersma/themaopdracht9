@@ -41,67 +41,18 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 
 # Results
 ## Data acquisition & preprocessing
+
 ## Validation & Performance
 
-### Class distributions
-At this step we can look at both our numeric as well as our categorical data since were looking at a collection of bar plots with frequencies.  
-For every one of our variables we'll make one of these bar plots. We can use these to look for two features in particular. First we can quickly glance at the bar plots for our numeric data and speculate whether they seem to be normally distributed. Secondly we may examine all of the bar plots a little more carefully and look for skewness.
-```{r classDistributions, results="hide"}
-# Function that creates a barplot on dataset given a column name
-barplots <- function(colName) {
-  ggplot(dataset, aes(x = !!sym(colName), fill = !!sym(colName))) +
-  geom_bar(show.legend = FALSE) +
-  theme(text=element_text(size=8))
-}
-
-# Gather column names from entire dataset
-cols <- colnames(dataset)
-# execute barplots function on every column
-plot_list <- lapply(cols, barplots)
-# arrange these boxplots into one figure
-ggarrange(plotlist = plot_list, ncol = 4, nrow = 2)
-```
-The first thing we notice is that a lot of the categorical variables are very skewed towards one particular value. In fact, all but two of these variables seem to have a significant level of skewness present. Removing most of our variables because of skewness would be foolish, so this is something we'll have to take into account when selecting an algorithm later on. One possible set of techniques to look into would be Synthetic Minority Oversampling Technique or SMOTE for short. What this entails and whether it is a good fit for our needs is something to be looked into later.  
-Something worth noting about our numeric variables is that all of them look to be normally distributed when examined by the naked eye. This is not of immediate concern but certainly good to know.  
-In a similar vain, one might notice a small detail that wasn't mentioned in our dataset's source. The age range for this dataset looks to be thirty to seventy year olds. Again, not something that is of immediate concern, but certainly good to know.
-
-### Correlation
-Many machine learning algorithms assume all attributes are independent. Therefore it is important to check whether the variables in our dataset are actually independent, or if they turn out to be correlated. We'll do this by creating a correlation matrix. In this matrix the size and shade of the circle indicate the amount of correlation. A larger circle indicates a stronger correlation, so a smaller circle in turn indicates the opposite. A blue shade demonstrates a positive correlation while a red shade illustrates a negative correlation. Therefore the lighter shades in between indicate the lack of a correlation.
-```{r correlation}
-# Convert all columns in the dataset to numeric data
-dataset.numeric <- sapply(dataset, as.integer)
-# Get correlation metrics on the dataset
-correlation <- cor(dataset.numeric)
-# Create a correlation matrix using the correlation metrics
-corrplot(correlation, type = "lower", tl.col = "black", tl.cex = 0.85, tl.offset = 1, 
-         title = "Correlation matrix", outline = TRUE, mar = c(0, 0, 1, 0), cl.cex = 0.75)
-```
-
-A good control point indicating the validity of this correlation matrix can be found between diabetes and glucose. This correlation has been studied extensively to the point where it is nearly common knowledge that high glucose levels correlate with diabetes. Seeing this correlation in our own data is a nice confirmation that this plot is correct. Apart from that, the correlation between these two variables indicates it might be preferable to choose one of them over the other going forward.  
-Let us now dive into the other correlations. One fairly obvious correlation is the one found between current smokers and the amount of cigarettes smoked per day. Since these variables are so similar and definitely not independent of each other, it might be worth dropping one of them depending on our choice of algorithm later.  
-The same can be said for systolic blood pressure and diastolic blood pressure. Since the former measures the amount of force put on the arteries as the heart beats, and the latter measures the amount of force on the arteries when the heart is in a state of rest, they might as well be combined into a single blood pressure variable if the chosen algorithm requires it.  
-Apart from correlating with each other the two variables named above correlate with hypertension as well. This too is a fairly obvious correlation since hypertension means the subject has high blood pressure. Another possible solution would therefore be to combine all three of these variables into a single features if necessary.
-
 ## Research findings
-
-### PCA - Principal Component Analysis
-When trying to determine whether our data clusters together one might be inclined to create a scatter plot. This is a valid approach when trying to compare two different variables. Comparing three different variables would already be slightly more challenging since this would require a three dimensional plot. This would become physically impossible when trying to compare four or more variables since our mortal souls are limited to a mere three dimensional space. This is where Principle Component Analysis, or PCA for short, comes in. PCA is a technique where the dimensions (variables) are reduced by converting them into Principle Components. These PCs are ordered by their impact on the variation of the data, where PC1 has the highest impact. The first two PCs will be plotted against each other, where every variable has an arrow indicating it's impact on these first two PCs. Since the plotted PCs have the highest impact on the data's variance, and the biggest arrows have the largest impact on the PCs, larger arrows indicate important variables. Furthermore arrows pointing the same way indicate positive correlation, while apposing arrows indicate negative correlation.
-```{r PCA}
-# Get PCA calculation on numeric dataset
-pca <- prcomp(dataset.numeric, center = TRUE, scale. = TRUE)
-# Plot PCA calculation
-ggbiplot(pca, obs.scale = 1, var.scale = 1,
-         groups = dataset$TenYearCHD, circle = TRUE, alpha = 0.35) +
-  scale_color_discrete(name = "Risk of CHD") +
-  ggtitle("Principal Component Analysis")
-```
-In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (21.6%) difference along the x-axis are to be considered more significant than differences along the y-axis.
-
 
 \newpage
 
 # Conclusion & Discussion
+
 ## Result based conclusions
+
 ## Discussion
+
 ## General conclusions and perspective
 \newpage
