@@ -2,11 +2,18 @@
 title: "Predicting risk of Coronary Heart Disease using Machine Learning"
 author: "Dennis Wiersma"
 date: "2022-10-05"
+urlcolor: blue
 output: 
   pdf_document: 
-    number_sections: yes
     highlight: kate
-urlcolor: blue
+    number_sections: yes
+    citation_package: natbib
+    
+    includes: 
+      in_header: preamble.tex
+      before_body: prefix.tex
+      
+bibliography: references.bib
 ---
 
 ```{r, include=FALSE}
@@ -27,11 +34,6 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 
 \newpage
 
-# Abstract
-\newpage
-
-\tableofcontents
-\newpage
 
 # Introduction
 \newpage
@@ -55,4 +57,5 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 ## Discussion
 
 ## General conclusions and perspective
+
 \newpage
