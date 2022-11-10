@@ -59,3 +59,7 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 ## General conclusions and perspective
 
 \newpage
+
+# Bibliography
+
+[@Michiel_Noback_2022_hanze]
