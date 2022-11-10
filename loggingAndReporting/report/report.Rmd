@@ -1,7 +1,7 @@
 ---
 title: "Predicting risk of Coronary Heart Disease using Machine Learning"
 author: "Dennis Wiersma"
-date: "2022-10-05"
+date: "`r Sys.Date()`"
 urlcolor: blue
 output: 
   pdf_document: 
