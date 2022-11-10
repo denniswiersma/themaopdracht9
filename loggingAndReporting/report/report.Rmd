@@ -44,7 +44,61 @@ As mentioned before, for the training of this ML model a rather large amount of 
 \newpage
 
 # Methodology
+For the successful execution of this project a collection of techniques and software solutions were used. This, together with the process of going from raw data to the classification of brand new data, will be discussed in this chapter.
+
 ## Software
+An overview of software, packages, and programming languages used for this project. The rest of this chapter will unfold when and where these various tools were used.
+
+\begin{table}[h]
+\begin{tabular}{l||rl}
+\hline
+Software & Version  & Function  \\ 
+\hline
+\hline
+\textbf{R} & 4.2.1 & Statistical programming \\
+\hline
+\textbf{Java} & 17.0.5 & General purpose programming \\
+\hline
+\textbf{Weka} & 3.8.6 & Machine learning software workbench \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{l||rl}
+\hline
+R package & Version  & Function  \\ 
+\hline
+\hline
+\textbf{knitr} & 1.40 & Dynamic report generation \\
+\hline
+\textbf{ggplot2} & 3.3.6 & Data visualisation \\
+\hline
+\textbf{ggpubr} & 0.4.0 & Arranging plots \\
+\hline
+\textbf{ggbiplot} & 0.55 & PCA plot \\
+\hline
+\textbf{corrplot} & 0.92 & Correlation plot \\
+\hline
+\textbf{RWeka} & 0.4-44 & Writing data as ARFF \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{l||rl}
+\hline
+Java package & Version  & Function  \\ 
+\hline
+\hline
+\textbf{Gradle} & 7.4 & Project management \\
+\hline
+\textbf{Weka API} & 3.8.0 & Weka programming interface \\
+\hline
+\textbf{ShadowJar} & 7.1.2 & Fat JAR building \\
+\hline
+\end{tabular}
+\end{table}
 
 ## Data
 ### Aquicition
