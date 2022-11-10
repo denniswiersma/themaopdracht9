@@ -34,21 +34,24 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 
 \newpage
 
-
 # Introduction
-Heart disease is a condition that gets more prevalent by the day. It is one of the most, if not the most, occurring cause of death in this day and age [@World_Health_Organization_2020_who]. It is therefore important to know what factors can lead to someone developing heart disease. Thankfully, a lot is already known about what goes into developing this condition. So, if it is known what causes heart disease, then what can we do with this information? The answer is prevention. Possibly just as important as knowing what causes heart disease would be to know whether someone is likely to develop a heart condition in the near future. After all, if one knows they're at risk of succumbing to the number one killer in the world, they can still make an effort to subvert disaster. In the process of gathering such information a patient could seek advice from their physician, who could then evaluate their lifestyle and physical condition. Using this information the medical practitioner can then estimate whether the patient is likely to be subject to the unease of heart disease. \
-Computer scientists wouldn't be computer scientists if they weren't trying to program someone out of a job, so what if this evaluation by a doctor could be automated by a computer. A piece of software could evaluate data from dozens of patients in mere seconds. This would cause the need for a physician to greatly decrease for this procedure, lowering both cost and barrier to entry. \
-To achieve this dream of automation a range of techniques were used, the most important of which is ML (Machine Learning) which is a sub field of AI (Artificial Intelligence). Using these ML techniques a model can be trained using a large amount of data. This model can then predict certain values for a given input. For example, such a model could predict whether a patient has the risk of developing heart disease when given information about that patient's medical condition. \
+
+Heart disease is a condition that gets more prevalent by the day. It is one of the most, if not the most, occurring cause of death in this day and age [@World_Health_Organization_2020_who]. It is therefore important to know what factors can lead to someone developing heart disease. Thankfully, a lot is already known about what goes into developing this condition. So, if it is known what causes heart disease, then what can we do with this information? The answer is prevention. Possibly just as important as knowing what causes heart disease would be to know whether someone is likely to develop a heart condition in the near future. After all, if one knows they're at risk of succumbing to the number one killer in the world, they can still make an effort to subvert disaster. In the process of gathering such information a patient could seek advice from their physician, who could then evaluate their lifestyle and physical condition. Using this information the medical practitioner can then estimate whether the patient is likely to be subject to the unease of heart disease.\
+Computer scientists wouldn't be computer scientists if they weren't trying to program someone out of a job, so what if this evaluation by a doctor could be automated by a computer. A piece of software could evaluate data from dozens of patients in mere seconds. This would cause the need for a physician to greatly decrease for this procedure, lowering both cost and barrier to entry.\
+To achieve this dream of automation a range of techniques were used, the most important of which is ML (Machine Learning) which is a sub field of AI (Artificial Intelligence). Using these ML techniques a model can be trained using a large amount of data. This model can then predict certain values for a given input. For example, such a model could predict whether a patient has the risk of developing heart disease when given information about that patient's medical condition.\
 As mentioned before, for the training of this ML model a rather large amount of data is required. The dataset which was used for completing this training phase was gathered from the FHS (Framingham Heart Study) and contains information on the risk of subjects developing CHD (Coronary Heart Disease) within the next ten years. Since these models can be fairly specific to the data on which they have been trained, any bias in the dataset will also translate into the model produced from it. This therefore leaves us with the following question to answer: How well can one predict 10 year risk of coronary heart disease in subjects from the Framingham Heart Study?
 
 \newpage
 
 # Methodology
+
 For the successful execution of this project a collection of techniques and software solutions were used. This, together with the process of going from raw data to the classification of brand new data, will be discussed in this chapter.
 
 ## Software
+
 An overview of software, packages, and programming languages used for this project. The rest of this chapter will unfold when and where these various tools were used.
 
+```{=tex}
 \begin{table}[h]
 \begin{tabular}{l||rl}
 \hline
@@ -63,7 +66,8 @@ Software & Version  & Function  \\
 \hline
 \end{tabular}
 \end{table}
-
+```
+```{=tex}
 \begin{table}[h]
 \begin{tabular}{l||rl}
 \hline
@@ -84,7 +88,8 @@ R package & Version  & Function  \\
 \hline
 \end{tabular}
 \end{table}
-
+```
+```{=tex}
 \begin{table}[h]
 \begin{tabular}{l||rl}
 \hline
@@ -99,17 +104,34 @@ Java package & Version  & Function  \\
 \hline
 \end{tabular}
 \end{table}
-
+```
 ## Data
-### Aquicition
+
+As mentioned before, training a machine learning algorithms requires data. This data is a subset of the statistics gathered for the FHS and contains over four thousand instances and sixteen variables.
+
+### Acquisition
+
+Obtaining the data was a fairly easy process of hunting down an interesting dataset on the [Kaggle website](https://www.kaggle.com/) that fulfilled a certain set of requirements. These requirements include, but are not limited to:
+
+* Choosing a supervised learning problem. This means the dataset in question is to contain class labels.
+* The set contains data from the life sciences. This includes, for example, biology, chemistry, and medicine.
+* At least seven attributes are present in the dataset, but preferably more.
+* At least several hundred instances are present in the dataset, but preferably more.
+
+At the close of hunting season a Kaggle page called "Logistic regression To predict heart disease" [@Dileep_2019_kaggle] was chosen for this project. It is the page that contains the subset of data from the FHS. One thing to note about this Kaggle page is that nowhere does it mention how they acquired this data from the FHS project. It simply links to another, by now defunct, Kaggle page. Apart from that it just has a download link to the data, some information, and a not that comprehensive analysis.
+
 ### Processing
 
 ## Machine Learning
+
 ### Performance
+
 ### Interfacing
+
 \newpage
 
 # Results
+
 ## Data acquisition & preprocessing
 
 ## Validation & Performance
