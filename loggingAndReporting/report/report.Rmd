@@ -53,6 +53,7 @@ An overview of software, packages, and programming languages used for this proje
 
 ```{=tex}
 \begin{table}[h]
+\caption{Software used for this project.}
 \begin{tabular}{l||rl}
 \hline
 Software & Version  & Function  \\ 
@@ -69,6 +70,7 @@ Software & Version  & Function  \\
 ```
 ```{=tex}
 \begin{table}[h]
+\caption{R packages used for this project.}
 \begin{tabular}{l||rl}
 \hline
 R package & Version  & Function  \\ 
@@ -91,6 +93,7 @@ R package & Version  & Function  \\
 ```
 ```{=tex}
 \begin{table}[h]
+\caption{Java packages used for this project.}
 \begin{tabular}{l||rl}
 \hline
 Java package & Version  & Function  \\ 
