@@ -143,7 +143,7 @@ The following attributes were dealt with in bulk since the process of imputation
 
 Since all of these attributes consist of plain integer data they can easily be imputed. It was decided that the imputation process would simply consist of assigning the missing values the respective attribute's mean values.
 
-Last but not least there's the problem regarding our so called class variable. This is the attribute which tells us whether a subject actually does run the risk of developing CHD in the next ten years. This attribute turned out to be heavily skewed towards subjects without said risk. This could potentially pose a myriad of issues during the training of our ML model. This issue was solved using Synthetic Minority Oversampling Technique (SMOTE). This is an approach where new (synthetic) instances are created which are labelled with the minority class, which would be the `yes` value in this case. 
+Last but not least there's the problem regarding our so called class variable. This is the attribute which tells us whether a subject actually does run the risk of developing CHD in the next ten years. This attribute turned out to be heavily skewed towards subjects without said risk. This could potentially pose a myriad of issues during the training of our ML model. This issue was solved using Synthetic Minority Oversampling Technique (SMOTE). This is an approach where new (synthetic) instances are created which are labelled with the minority class, which would be the `yes` value in this case. The instances with this label were increased by 450% to solve the issue of imbalance. 
 \newpage
 
 ## Machine Learning
