@@ -22,9 +22,16 @@ bibliography: references.bib
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 # Excludes all code from the report
-knitr::opts_chunk$set(include = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r libraries, include=FALSE}
+# Loading required libraries
+library("ggplot2")
+library("ggpubr")
+library("ggbiplot")
+library("corrplot")
 ```
 
 ```{r loadingDataset}
@@ -213,7 +220,76 @@ A working ML model which can classify new instances as being or not being at ris
 
 # Results
 
+The methodology described above generated a plethora of results, which will be showcased in this chapter.
+
 ## Data acquisition & preprocessing
+
+### Correlation
+
+```{r correlation, fig.cap="Matrix of degree of correlation between variables."}
+# Convert all columns in the dataset to numeric data
+dataset.numeric <- sapply(dataset, as.integer)
+# Get correlation metrics on the dataset
+correlation <- cor(dataset.numeric)
+# Create a correlation matrix using the correlation metrics
+corrplot(correlation, 
+         type = "lower", 
+         tl.col = "black", 
+         tl.cex = 0.85, 
+         tl.offset = 1, 
+         title = "Correlation matrix", 
+         outline = TRUE, 
+         mar = c(0, 0, 1, 0), 
+         cl.cex = 0.75)
+```
+
+### Principal Component Analysis
+
+```{r PCA, fig.cap="PCA plot charting PC2 against PC1."}
+# Get PCA calculation on numeric dataset
+pca <- prcomp(dataset.numeric, 
+              center = TRUE, 
+              scale. = TRUE)
+# Plot PCA calculation
+ggbiplot(pca, 
+         obs.scale = 1, 
+         var.scale = 1,
+         groups = dataset$TenYearCHD, 
+         circle = TRUE, alpha = 0.35) +
+  scale_color_discrete(name = "Risk of CHD") +
+  ggtitle("Principal Component Analysis")
+```
+
+### SMOTE
+
+```{r SMOTE, fig.cap="Distribution of class variable pre and post SMOTE."}
+
+preSMOTE_CHD <- ggplot(dataset, 
+                       aes(x = TenYearCHD, fill = TenYearCHD)
+                       ) +
+                      geom_bar(show.legend = TRUE) + 
+                      ylab("Number of instances") +
+                      theme(text=element_text(size=8)) + 
+                      ggtitle("Pre-SMOTE distribution")
+
+postSMOTE_CHD <- ggplot(postSMOTE_dataset, 
+                        aes(x = TenYearCHD, fill = TenYearCHD)
+                        ) +
+                        geom_bar(show.legend = FALSE) + 
+                        ylab("") +
+                        theme(text=element_text(size=8), 
+                              axis.text = element_blank(), 
+                              axis.ticks = element_blank()
+                              ) + 
+                        ggtitle("Post-SMOTE distribution")
+
+# arrange these boxplots into one figure
+ggarrange(plotlist = list(preSMOTE_CHD, postSMOTE_CHD), 
+          ncol = 2, 
+          nrow = 1, 
+          common.legend = TRUE, 
+          legend = "bottom")
+```
 
 ## Validation & Performance
 
