@@ -86,7 +86,7 @@ R package & Version  & Function  \\
 \hline
 \textbf{corrplot} & 0.92 & Correlation plot \\
 \hline
-\textbf{RWeka} & 0.4-44 & Writing data as ARFF \\
+\textbf{RWeka} & 0.4-44 & Writing data to ARFF \\
 \hline
 \end{tabular}
 \end{table}
