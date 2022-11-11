@@ -201,6 +201,9 @@ The results of this comparison prompted the application of Cost Sensitive Classi
 
 \newpage
 
+When this initial comparison was concluded, the two best performing algorithms were chosen for optimisation. During this process, each algorithm's hyper parameters were revised such as to squeeze as much performance out of them as possible. The algorithm that performed best after this rigorous process was chosen as the algorithm of choice for the rest of this project. That, however, does not mean this will be the final model. There is still more performance to be gained. \
+The last step before arriving at the final working model is the testing of so called meta classifiers. For this phase of testing both Bagging and Boosting techniques were applied to best performing algorithm thus far with the intention of creating an even better performing model. This concludes the final step of the ML model construction process. 
+
 ### Interfacing
 
 \newpage
