@@ -45,7 +45,7 @@ As mentioned before, for the training of this ML model a rather large amount of 
 
 # Methodology
 
-For the successful execution of this project a collection of techniques and software solutions were used. This, together with the process of going from raw data to the classification of brand new data, will be discussed in this chapter.
+For the successful execution of this project a collection of techniques and software were used instructions for which were provided by Hanze University of Applied Sciences [@Michiel_Noback_2022_hanze]. This, together with the process of going from raw data to the classification of brand new data, will be discussed in this chapter.
 
 ## Software
 
@@ -125,6 +125,27 @@ At the close of hunting season a Kaggle page called "Logistic regression To pred
 
 ### Processing
 
+After acquiring the dataset, the first thing is of course to load it into one's software package of choice, which in this case would be R. Once the data has been loaded it is time to take a good look at it, and it is at this point that the first problem arises. This collection of data contains an `education` attribute consisting of values ranging from one through to four. An explanation of what these numbers represent is nowhere to be found. It was therefore decided to drop this variable, since it is not entirely clear what exactly it represents.
+
+Moving on one runs into the second issue, which are the missing units. Just like a description of the `education` characteristic was missing, a lot of units for the given measurements were missing. Reading the Kaggle page and scouring the FHS website yielded no results, but luckily some of the missing units were easily interpreted.
+
+Now that the missing metadata has been dealt with it was time to correctly label the data. Some of the data consisted of binary nominal values but were encoded in numerics. These variables were transformed into R's factor objects. These factors consist of levels like `male` and `female`, or `yes` and `no`. These are perfect for encoding nominal attributes.
+
+While the missing metadata and wrongly encoded data have been resolved, the missing values in our dataset have not been taken care of yet. Resolving these so called `NA` values will be done by reviewing them on an attribute by attribute basis. \
+First up are the amount of cigarettes smoked per day by a given subject. The initial step was to check whether every instance that had a missing value to their name was currently a smoker. This turned out to be the case, which meant these values could be imputed from the remaining values. This imputation was done by taking the mean number of cigarettes smoked \textit{by subjects that are currently smokers} and assigning this mean value to the gaps in our data. \
+Next were the missing values for whether the subject was or wasn't on blood pressure medication. After looking at the dataset it was determined that, as one might suspect, a very large majority of subjects were in fact not on blood pressure medication. It was therefore assumed that the instances with the missing values would not be on these types of medication either. \
+The following attributes were dealt with in bulk since the process of imputation was precisely identical for each of them. The variables in question are:
+
+* Total cholesterol levels
+* BMI
+* Heart rate
+* Glucose levels
+
+Since all of these attributes consist of plain integer data they can easily be imputed. It was decided that the imputation process would simply consist of assigning the missing values the respective attribute's mean values.
+
+Last but not least there's the problem regarding our so called class variable. This is the attribute which tells us whether a subject actually does run the risk of developing CHD in the next ten years. This attribute turned out to be heavily skewed towards subjects without said risk. This could potentially pose a myriad of issues during the training of our ML model. This issue was solved using Synthetic Minority Oversampling Technique (SMOTE). This is an approach where new (synthetic) instances are created which are labelled with the minority class, which would be the `yes` value in this case. 
+\newpage
+
 ## Machine Learning
 
 ### Performance
@@ -154,5 +175,3 @@ At the close of hunting season a Kaggle page called "Logistic regression To pred
 \newpage
 
 # Bibliography
-
-[@Michiel_Noback_2022_hanze]
