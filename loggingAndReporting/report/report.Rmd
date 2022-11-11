@@ -28,8 +28,9 @@ knitr::opts_chunk$set(include = FALSE)
 ```
 
 ```{r loadingDataset}
-# Load dataset
+# Load datasets
 dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = ",", stringsAsFactors = TRUE)
+postSMOTE_dataset <- read.table(file = "../data/roundedSMOTEprocessedData.csv", header = TRUE, sep = ",", stringsAsFactors = TRUE)
 ```
 
 \newpage
