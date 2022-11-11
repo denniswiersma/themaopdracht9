@@ -38,8 +38,8 @@ dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = "
 
 Heart disease is a condition that gets more prevalent by the day. It is one of the most, if not the most, occurring cause of death in this day and age [@World_Health_Organization_2020_who]. It is therefore important to know what factors can lead to someone developing heart disease. Thankfully, a lot is already known about what goes into developing this condition. So, if it is known what causes heart disease, then what can we do with this information? The answer is prevention. Possibly just as important as knowing what causes heart disease would be to know whether someone is likely to develop a heart condition in the near future. After all, if one knows they're at risk of succumbing to the number one killer in the world, they can still make an effort to subvert disaster. In the process of gathering such information a patient could seek advice from their physician, who could then evaluate their lifestyle and physical condition. Using this information the medical practitioner can then estimate whether the patient is likely to be subject to the unease of heart disease.\
 Computer scientists wouldn't be computer scientists if they weren't trying to program someone out of a job, so what if this evaluation by a doctor could be automated by a computer. A piece of software could evaluate data from dozens of patients in mere seconds. This would cause the need for a physician to greatly decrease for this procedure, lowering both cost and barrier to entry.\
-To achieve this dream of automation a range of techniques were used, the most important of which is ML (Machine Learning) which is a sub field of AI (Artificial Intelligence). Using these ML techniques a model can be trained using a large amount of data. This model can then predict certain values for a given input. For example, such a model could predict whether a patient has the risk of developing heart disease when given information about that patient's medical condition.\
-As mentioned before, for the training of this ML model a rather large amount of data is required. The dataset which was used for completing this training phase was gathered from the FHS (Framingham Heart Study) and contains information on the risk of subjects developing CHD (Coronary Heart Disease) within the next ten years. Since these models can be fairly specific to the data on which they have been trained, any bias in the dataset will also translate into the model produced from it. This therefore leaves us with the following question to answer: How well can one predict 10 year risk of coronary heart disease in subjects from the Framingham Heart Study?
+To achieve this dream of automation a range of techniques were used, the most important of which is Machine Learning (ML) which is a sub field of Artificial Intelligence (AI). Using these ML techniques a model can be trained using a large amount of data. This model can then predict certain values for a given input. For example, such a model could predict whether a patient has the risk of developing heart disease when given information about that patient's medical condition.\
+As mentioned before, for the training of this ML model a rather large amount of data is required. The dataset which was used for completing this training phase was gathered from the Framingham Heart Study (FHS) and contains information on the risk of subjects developing Coronary Heart Disease (CHD) within the next ten years. Since these models can be fairly specific to the data on which they have been trained, any bias in the dataset will also translate into the model produced from it. This therefore leaves us with the following question to answer: How well can one predict 10 year risk of coronary heart disease in subjects from the Framingham Heart Study?
 
 \newpage
 
@@ -148,7 +148,58 @@ Last but not least there's the problem regarding our so called class variable. T
 
 ## Machine Learning
 
+Now that the data was ready, it was finally time to start work on the ML model. A lot of the work of exploring different algorithms, comparing different algorithms, comparing different hyper parameters, and figuring out what worked best was done using the Weka ML software workbench. 
+
 ### Performance
+
+When trying to develop an ML model there are hordes of different algorithms to choose from, each of which perform better when applied in their own specific use case. So then, how does one figure out which algorithm works best for the data at hand? This is where the Weka experimenter comes in. This section of the Weka workbench lets users easily test and compare algorithms and parameters. \
+Apart from finding a software solution, another question to answer is which scoring methods to use when making such comparisons. In the case of this research project this encompasses the following scoring methods:
+
+* Classification speed
+* Accuracy
+* False Negative Rate (FNR)
+* F-measure
+* Area Under the Curve of Receiver Operating Characteristic (AUC-ROC)
+
+These metrics will be used to compare different algorithms, but which algorithms to compare? ML algorithms can be divided into different categories. A few examples of these categories would be rule based, tree based, and lazy learning based algorithms. A selection of algorithms to compare has been carefully curated by ensuring every category of was represented. This resulted in the following algorithms being compared:
+
+* ZeroR
+* OneR
+* J48
+* Random Forest
+* IBk
+* Naive Bayes
+* Simple Logistic
+* Sequential Minimal Optimization (SMO)
+
+The results of this comparison prompted the application of Cost Sensitive Classification (CSC). This is a technique where a cost can be applied to instances which are classified a certain way. The classifications that CSC can be applied to are True Positive (TP), True Negative (TN), False Positive (FP), and False Negative (FN) designations. In the context of this research a FN allotment regards a subject that does run the risk of developing CHD but would not be classified as such. It would be best to minimise this outcome, even if it means classifying a number of negative instances as positive. The final cost matrix can be found below:
+
+\begin{table}[h]
+\caption{Cost matrix where FN instances are punished more.}
+  \begin{tabular}{ |c|c||c|c|  }
+    \hline
+    & \multicolumn{3}{c|}{\textbf{Predicted condition}} \tabularnewline
+    \hline
+    & & \textbf{Positive} & \textbf{Negative} \\
+    \hline
+    \hline
+    \multirow{3}{*}{\rotatebox{90}{\textbf{Actual condition \hspace{1em}}}} & & & \\
+    & & & \\
+    & \textbf{Positive} & 0 (TP) & 2.5 (FN) \\ 
+    & & & \\
+    & & & \\
+    \cline{2-4}
+    & & & \\
+    & & & \\
+    & \textbf{Negative} & 1 (FP) & 0 (TN) \\
+    & & & \\
+    & & & \\
+    \hline
+  \end{tabular}
+\label{table:confMatrix}
+\end{table}
+
+\newpage
 
 ### Interfacing
 
