@@ -371,6 +371,8 @@ ggarrange(plotlist = list(preSMOTE_CHD, postSMOTE_CHD),
 \end{tabular} \footnotesize \par}
 \end{table}
 
+\newpage
+
 ## Research findings
 
 \begin{table}[thb]
