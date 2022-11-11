@@ -230,4 +230,8 @@ A working ML model which can classify new instances as being or not being at ris
 
 \newpage
 
+# Project Proposal
+
+\newpage
+
 # Bibliography
