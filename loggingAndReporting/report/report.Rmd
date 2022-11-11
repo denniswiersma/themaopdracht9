@@ -206,6 +206,8 @@ The last step before arriving at the final working model is the testing of so ca
 
 ### Interfacing
 
+A working ML model which can classify new instances as being or not being at risk of CHD is nice, but how does one actually go about interacting with this model to achieve such classification? This is another point where Weka comes into play. Apart from it's GUI workbench, Weka also provides an API for building models and classifying new, unknown instances. This API can be interacted with using the Java programming language. Using these tools a wrapper for our ML model was build in Java using Gradle for project management and the Weka API for classifying new instances based on our existing model. All this functionality has been neatly packed into a single JAR file which can be run using one's CLI of choice, as long as a Java install is present.
+
 \newpage
 
 # Results
