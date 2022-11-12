@@ -403,7 +403,7 @@ Boosting is an ensemble learner which builds multiple models. This is an iterati
 \end{tabular} \footnotesize \par}
 \end{table}
 
-Boosting seems to be a treasure trove of performance improvements! We see statistically significant increases across the board. This is unfortunately at the cost of a false negative rate which is two percentage points higher. One could however argue that this is a sacrifice worth making since it does result in significantly higher values for accuracy, ROC area, and even F-measure. Although training the algorithms with 55 boosting iterations takes some time, it seems to be well worth the cost.
+Boosting seems to be a treasure trove of performance improvements! We see statistically significant increases across the board. This is unfortunately at the cost of a false negative rate which is two percentage points higher. One could however argue that this is a sacrifice worth making since it does result in significantly higher values for accuracy, ROC area, and even F-measure.
 
 ## Research findings
 
