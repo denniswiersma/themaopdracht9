@@ -280,6 +280,8 @@ In the plot above we can clearly see a contrast between the location of subjects
 
 ### SMOTE
 
+In an effort to balance out the instances of each of the class variable's labels SMOTE was applied. The initial imbalance and later parity can be observed in the form of this barplot. 
+
 ```{r SMOTE, fig.cap="Distribution of class variable pre-SMOTE and post-SMOTE."}
 
 preSMOTE_CHD <- ggplot(dataset, 
@@ -296,8 +298,8 @@ postSMOTE_CHD <- ggplot(postSMOTE_dataset,
                         geom_bar(show.legend = FALSE) + 
                         ylab("") +
                         theme(text=element_text(size=8), 
-                              axis.text = element_blank(), 
-                              axis.ticks = element_blank()
+                              axis.text.y = element_blank(), 
+                              axis.ticks.y = element_blank()
                               ) + 
                         ggtitle("Post-SMOTE distribution")
 
@@ -309,7 +311,7 @@ ggarrange(plotlist = list(preSMOTE_CHD, postSMOTE_CHD),
           legend = "bottom")
 ```
 
-\newpage
+As can be observed in the pre-SMOTE distribution found on the left hand side, the number of instances labelled `no` outnumbered the `yes` labelled instances multiple times over. By synthetically creating more instances labelled `yes` these two classes were very nearly equalised, with the negative label still slightly outnumbering the positive label.
 
 ## Validation & Performance
 
