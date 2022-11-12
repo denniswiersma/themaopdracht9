@@ -256,6 +256,9 @@ Apart from correlating with each other the two variables named above correlate w
 
 ### Principal Component Analysis
 
+
+When trying to determine whether our data clusters together one might be inclined to create a scatter plot. This is a valid approach when trying to compare two different variables. Comparing three different variables would already be slightly more challenging since this would require a three dimensional plot. This would become physically impossible however when trying to compare four or more variables, since our mortal souls are limited to a mere three dimensional space. This is where Principle Component Analysis (PCA) comes in. PCA is a technique where the dimensions (variables) are reduced by converting them into Principle Components. These PCs are ordered by their impact on the variation of the data, where PC1 has the highest impact. The first two PCs will be plotted against each other, where every variable has an arrow indicating it’s impact on these first two PCs. Since the plotted PCs have the highest impact on the data’s variance, and the biggest arrows have the largest impact on the PCs, larger arrows indicate more significant variables. Furthermore arrows pointing the same way indicate positive correlation, while opposing arrows indicate negative correlation.
+
 ```{r PCA, fig.cap="PCA plot charting PC2 against PC1."}
 # Get PCA calculation on numeric dataset
 pca <- prcomp(dataset.numeric, 
@@ -270,6 +273,8 @@ ggbiplot(pca,
   scale_color_discrete(name = "Risk of CHD") +
   ggtitle("Principal Component Analysis")
 ```
+
+In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (20.2%) differences along the x-axis are to be considered more significant than differences along the y-axis. We do, however, see some clustering along the y-axis as well. 
 
 \newpage
 
