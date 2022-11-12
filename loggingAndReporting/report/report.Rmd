@@ -313,12 +313,14 @@ ggarrange(plotlist = list(preSMOTE_CHD, postSMOTE_CHD),
 
 As can be observed in the pre-SMOTE distribution found on the left hand side, the number of instances labelled `no` outnumbered the `yes` labelled instances multiple times over. By synthetically creating more instances labelled `yes` these two classes were very nearly equalised, with the negative label still slightly outnumbering the positive label.
 
+\newpage
+
 ## Validation & Performance
 
 ### Default settings
 
 \begin{table}[thb]
-\caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings using 10-fold cross validation and using ZeroR as a baseline.}
 \footnotesize
 {\begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -342,7 +344,7 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 ### Cost Sensitive Classification
 
 \begin{table}[thb]
-\caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification after performing SMOTE on the dataset, using ZeroR as a baseline.}
+\caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification and 10-fold cross validation and using ZeroR as a baseline.}
 \footnotesize
 {\begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}\\
 \hline
@@ -366,7 +368,7 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 ### Boosting
 
 \begin{table}[thb]
-\caption{\label{BoostingComp}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification after performing SMOTE on the dataset, using a RandomForest without boost as a baseline.}
+\caption{\label{BoostingComp}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification using 10-fold cross validation and using a RandomForest without boost as a baseline.}
 \footnotesize
 {\begin{tabular}{lr||r@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
 \hline
@@ -392,7 +394,7 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 ## Research findings
 
 \begin{table}[thb]
-\caption{\label{FinalModel}Final model which utilises boosting with RandomForests while using cost sensitive classification after performing SMOTE on the dataset.}
+\caption{\label{FinalModel}Final model which utilises boosting with RandomForests while using cost sensitive classification using 10-fold cross validation.}
 \footnotesize
 {\begin{tabular}{l||r@{\hspace{0.1cm}}} \\
 \hline
