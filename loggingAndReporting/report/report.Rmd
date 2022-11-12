@@ -224,7 +224,11 @@ The methodology described above generated a plethora of results, which will be s
 
 ## Data acquisition & preprocessing
 
+During the data acquisition and preprocessing phase the data has been made more insightful using a series of visualisations. A number of these visualisations have been described below.
+
 ### Correlation
+
+Different variables within a dataset may be correlated with each other. This could potentially pose problems for some ML algorithms since these may simply assume that all attributes are independent from each other. It is therefore important to be aware of whether there are correlations present within the dataset used in this project.
 
 ```{r correlation, fig.cap="Matrix of degree of correlation between variables."}
 # Convert all columns in the dataset to numeric data
@@ -243,7 +247,12 @@ corrplot(correlation,
          cl.cex = 0.75)
 ```
 
-\newpage
+In this correlation matrix the size of each circle indicates the strength of a given correlation. When the circle is coloured a darker shade of blue it indicates a positive correlation, while a dark shade of red illustrates a negative correlation. Therefore the lighter shades of colour in between demonstrate the lack of a correlation.
+
+When looking at the correlation matrix a few data points immediately jump out. The first one to look at is the strong positive correlation between glucose and diabetes. This correlation has been studied extensively to the point where it is essentially common knowledge that high glucose levels correlate with diabetes. Seeing this correlation within this dataset as well serves as a nice affirmation on the quality of the data. \
+Another fairly obvious correlation can be found between whether a certain subject is a smoker and the number of cigarettes one smokes per day. These two attributes serve a very similar purpose, which is something to keep in mind during the ML training process. \
+A very similar situation to the one just described has arisen between systolic and diastolic blood pressure. Since the former refers to the amount of force put on the arteries as the heart beats and the latter to the amount of force on the arteries when the heart is in a state of rest, it might be viable to merge these two attributes if the situation requires it. \
+Apart from correlating with each other the two variables named above correlate with hypertension as well. This too is a fairly obvious correlation since hypertension denotes the subject has high blood pressure.
 
 ### Principal Component Analysis
 
