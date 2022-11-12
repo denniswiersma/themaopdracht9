@@ -317,7 +317,11 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 
 ## Validation & Performance
 
+This chapter encapsulates the process of measuring and comparing the performance of different ML models. The data found in this chapter is presented using tables. 
+
 ### Default settings
+
+As an initial start all of the chosen algorithms were compared to each other using every algorithm's default settings in Weka. Results for this initial test can be found in the table below.
 
 \begin{table}[thb]
 \caption{\label{DefaultSMOTEComparison}Comparison of ML algorithms using default settings using 10-fold cross validation and using ZeroR as a baseline.}
@@ -341,7 +345,11 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 \end{tabular} \footnotesize \par}
 \end{table}
 
+When taking each metric into account we see that both the OneR rule as well as RandomForest perform quite well, but they are far from perfect. They sport a false negative rate of 9% and 17% respectively. Although this is quite a bit lower than most of the other algorithms, it is still quite dubious to use an algorithm which classifies over $\frac{1}{10}$ of positive instances as negative.
+
 ### Cost Sensitive Classification
+
+To remedy the issue of false negatives we can apply a the CSC technique mentioned before. This classifier allows one to apply a custom amount of cost to values in the confusion matrix. In this case false negatives are a great sin, so a cost of 2.5 was applied. This is over twice as high as the default cost of only one that applies to false positive values.
 
 \begin{table}[thb]
 \caption{\label{DefaultSMOTEComparisonCSC}Comparison of ML algorithms using default settings and cost sensitive classification and 10-fold cross validation and using ZeroR as a baseline.}
@@ -365,7 +373,13 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 \end{tabular} \footnotesize \par}
 \end{table}
 
+In these results we can see that some of our best performing algorithms, including our best: the RandomForest, take a hit in accuracy and ROC Area. However, we do get a significantly lower false negative rate in return for that hit. The two best performing algorithms that we are left with look to be OneR and RandomForest. We’ll continue our analysis with just RandomForest, since optimising every algorithms would be too time intensive for this project.
+
+\newpage
+
 ### Boosting
+
+Boosting is an ensemble learner which builds multiple models. This is an iterative technique which builds new models based on the performance of the previously built models. It does this by assigning extra weight to instances which were misclassified before. This encourages the new model to become a so called expert at instances that were misclassified by earlier models. This algorithm is known in Weka as AdaBoostM1. We will perform this technique with four different numbers of iterations and compare it to a baseline without boosting.
 
 \begin{table}[thb]
 \caption{\label{BoostingComp}Comparison of boosting with RandomForests using a varying number of boost iterations while using cost sensitive classification using 10-fold cross validation and using a RandomForest without boost as a baseline.}
@@ -389,9 +403,13 @@ As can be observed in the pre-SMOTE distribution found on the left hand side, th
 \end{tabular} \footnotesize \par}
 \end{table}
 
-\newpage
+Boosting seems to be a treasure trove of performance improvements! We see statistically significant increases across the board. This is unfortunately at the cost of a false negative rate which is two percentage points higher. One could however argue that this is a sacrifice worth making since it does result in significantly higher values for accuracy, ROC area, and even F-measure. Although training the algorithms with 55 boosting iterations takes some time, it seems to be well worth the cost.
 
 ## Research findings
+
+Let’s take a brief look at what the final model looks like. When entering the model settings into Weka it starts off with AdaBoostM1 for which the `numIterations` is set to 55. \
+Next up is the use of the `CostSensitiveClassifier`. For this the `costMatrix` will be resized to 2x2, the cost of false negatives will be set to 2.5. At last the `minimizeExpectedCost` setting will be set to True. \
+Last but not least a classifier is passed to this algorithm as well and for that the RandomForest will be used. The `numExecutionSlots` parameter will be set to 8 for full CPU utilisation. This leaves one with a final model which performs as follows:
 
 \begin{table}[thb]
 \caption{\label{FinalModel}Final model which utilises boosting with RandomForests while using cost sensitive classification using 10-fold cross validation.}
