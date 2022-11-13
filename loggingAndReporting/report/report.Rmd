@@ -467,6 +467,12 @@ After sifting through data, modifying the input, and testing and comparing a ple
 
 # Project Proposal
 
+When considering the subject matter for the minor in High Performance / High Throughput Biocomputing an obvious option to continue on this work would be to further improve the model. Better yet, an entirely new model could be made using deep learning techniques. It'd be an interesting undertaking to see if a neural network could be trained to perform just as well or even better than the model produced in this project.
+
+On a related note, it might be interesting to see whether fewer attributes could be used while still achieving the same level of performance. This could play a significant factor when considering at home use of a model like this. Some attributes, like measurements for cholesterol levels, still require a doctor to be involved, while other attributes, like BMI, are perfect for at home evaluation. Eliminating these more difficult to obtain data points would therefore greatly improve the usability of a model.
+
+Further improving upon the at home use of a given model would be developing an easier method of interaction with the model than having to use a CLI. For the minor in Application Design one might consider developing a web application for the classification of brand new data. This would greatly improve the accessibility and usability of a given model by patients.
+
 \newpage
 
 # Bibliography
