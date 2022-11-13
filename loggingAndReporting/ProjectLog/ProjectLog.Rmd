@@ -771,6 +771,8 @@ As a last attempt to improve our model we will try an attribute selector. This w
 
 This approach has worsened our results significantly. Metrics dropped across the board, making this method not worthwhile to pursue.
 
+\newpage
+
 ### Final model
 
 We have finally reached the last stop in our machine learning model building adventures. Let's take a brief look at what it is we ended up with.
@@ -797,5 +799,3 @@ When entering our model settings into Weka we start off with `AdaBoostM1` for wh
 
 This model can be found at the following location in the project directory: \
 `/data/BoostedCostSensitiveRandomForest.model`
-
-## Java wrapper
