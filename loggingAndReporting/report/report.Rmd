@@ -37,6 +37,7 @@ library("corrplot")
 ```{r loadingDataset}
 # Load datasets
 dataset <- read.table(file = "../data/processedData.csv", header = TRUE, sep = ",", stringsAsFactors = TRUE)
+dataset <- subset (dataset, select = -X)
 postSMOTE_dataset <- read.table(file = "../data/roundedSMOTEprocessedData.csv", header = TRUE, sep = ",", stringsAsFactors = TRUE)
 ```
 
@@ -274,7 +275,7 @@ ggbiplot(pca,
   ggtitle("Principal Component Analysis")
 ```
 
-In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (20.2%) differences along the x-axis are to be considered more significant than differences along the y-axis. We do, however, see some clustering along the y-axis as well. 
+In the plot above we can clearly see a contrast between the location of subjects with and without ten year risk of CHD. The subjects with risk of CHD cluster further along the x-axis than subjects lacking this risk. Since PC1 (x-axis) accounts for the larger amount of variation in our data (21.6%) differences along the x-axis are to be considered more significant than differences along the y-axis. We do, however, see some clustering along the y-axis as well. 
 
 \newpage
 
@@ -434,7 +435,9 @@ Last but not least a classifier is passed to this algorithm as well and for that
 
 # Conclusion & Discussion
 
+
 ## Result based conclusions
+
 
 ## Discussion
 
