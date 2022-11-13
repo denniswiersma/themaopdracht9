@@ -231,7 +231,7 @@ During the data acquisition and preprocessing phase the data has been made more 
 
 Different variables within a dataset may be correlated with each other. This could potentially pose problems for some ML algorithms since these may simply assume that all attributes are independent from each other. It is therefore important to be aware of whether there are correlations present within the dataset used in this project.
 
-```{r correlation, fig.cap="Matrix of degree of correlation between variables."}
+```{r correlation, fig.cap="Matrix of degree of correlation between variables.\\label{corrplot}"}
 # Convert all columns in the dataset to numeric data
 dataset.numeric <- sapply(dataset, as.integer)
 # Get correlation metrics on the dataset
@@ -260,7 +260,7 @@ Apart from correlating with each other the two variables named above correlate w
 
 When trying to determine whether our data clusters together one might be inclined to create a scatter plot. This is a valid approach when trying to compare two different variables. Comparing three different variables would already be slightly more challenging since this would require a three dimensional plot. This would become physically impossible however when trying to compare four or more variables, since our mortal souls are limited to a mere three dimensional space. This is where Principle Component Analysis (PCA) comes in. PCA is a technique where the dimensions (variables) are reduced by converting them into Principle Components. These PCs are ordered by their impact on the variation of the data, where PC1 has the highest impact. The first two PCs will be plotted against each other, where every variable has an arrow indicating it’s impact on these first two PCs. Since the plotted PCs have the highest impact on the data’s variance, and the biggest arrows have the largest impact on the PCs, larger arrows indicate more significant variables. Furthermore arrows pointing the same way indicate positive correlation, while opposing arrows indicate negative correlation.
 
-```{r PCA, fig.cap="PCA plot charting PC2 against PC1."}
+```{r PCA, fig.cap="PCA plot charting PC2 against PC1.\\label{pcaplot}"}
 # Get PCA calculation on numeric dataset
 pca <- prcomp(dataset.numeric, 
               center = TRUE, 
@@ -283,7 +283,7 @@ In the plot above we can clearly see a contrast between the location of subjects
 
 In an effort to balance out the instances of each of the class variable's labels SMOTE was applied. The initial imbalance and later parity can be observed in the form of this barplot. 
 
-```{r SMOTE, fig.cap="Distribution of class variable pre-SMOTE and post-SMOTE."}
+```{r SMOTE, fig.cap="Distribution of class variable pre-SMOTE and post-SMOTE.\\label{smoteplot}"}
 
 preSMOTE_CHD <- ggplot(dataset, 
                        aes(x = TenYearCHD, fill = TenYearCHD)
