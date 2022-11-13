@@ -435,13 +435,33 @@ Last but not least a classifier is passed to this algorithm as well and for that
 
 # Conclusion & Discussion
 
+The contents of this chapter include a thorough discussion of the results showcased in the previous chapter.
 
 ## Result based conclusions
 
+During analysis of the correlation matrix (figure \ref{corrplot}) it was found that the following variables seem to display a positive correlation:
+
+* Glucose levels & Diabetes
+* Current smoker & Number of cigarettes smoked per day
+* Systolic blood pressure & Diastolic blood pressure & Hypertension
+
+The contents of the PCA plot (figure \ref{pcaplot}) reaffirm these correlations as showcased by the arrows in this figure. This visualisation informed on the impact size of the largest principal components as well.
+
+The SMOTE plot (figure \ref{smoteplot}) showed an exquisite rebalancing of the dataset's class variable. The extra synthetically created instances helped decrease the amount of bias in the data.
+
+Testing every chosen ML algorithm in table \ref{DefaultSMOTEComparison} using their default settings informed on their potential, but showcased their weaknesses as well. Running this basic comparison resulted in the decision to make use of CSC in table \ref{DefaultSMOTEComparisonCSC} to decrease the number of false negative classifications. Ending on a spectacular increase in performance was the addition of the AdaBoost ensemble learner in table \ref{BoostingComp}. All this led to the final model found in table \ref{FinalModel}.
 
 ## Discussion
 
+Considering the RandomForest model produced over the course of this project, keeping correlated attributes present in the dataset may have introduced bias for these attributes into the model. Since random forests sample some features to build each tree, the information contained in two correlated attributes is effectively sampled twice. This problem is only exaggerated when the data contains a high percentage of correlated features.
+
+Applying SMOTE to balance the dataset's class variable was a good effort to decrease bias. However, as the name suggests, synthetically created data is not quite on the same level as real world data. This artificial pool of data may therefore have influenced the final results the model produces.
+
+When starting the process of ML algorithms, just using the default settings for each of the algorithms may have left some performance on the table. One of the algorithms dropped in this early step may have performed very well if it were optimised more carefully. Optimising that number of algorithms was unfortunately outside of the scope of this project.
+
 ## General conclusions and perspective
+
+After sifting through data, modifying the input, and testing and comparing a plethora of ML techniques, one may conclude that one can predict 10 year risk of coronary heart disease in subjects from the Framingham Heart Study fairly well, considering the performance metrics displayed by the finished ML model.
 
 \newpage
 
